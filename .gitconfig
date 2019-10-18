@@ -1,0 +1,8 @@
+# Add to .git/config
+#
+# [include]
+#   path = ../.gitconfig
+
+[user]
+	name = Alexander Fleming
+	email = tech@sonnenkern.com

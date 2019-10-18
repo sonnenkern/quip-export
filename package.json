@@ -1,0 +1,39 @@
+{
+  "name": "quip-export",
+  "version": "0.0.1",
+  "description": "Export all folders and documents from Quip",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonnenkern/quip-export.git"
+  },
+  "keywords": [
+    "quip",
+    "quip-export",
+    "mass-export",
+    "export",
+    "backup",
+    "quip-backup",
+    "documents",
+    "files",
+    "blob",
+    "blobs"
+  ],
+  "engines": {
+    "node": ">=10.16.1"
+  },
+  "author": "Alexander Fleming <tech@sonnenkern.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sonnenkern/quip-export/issues"
+  },
+  "homepage": "https://github.com/sonnenkern/quip-export#readme",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "mime": "^2.4.4",
+    "node-fetch": "^2.6.0"
+  }
+}
