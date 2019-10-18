@@ -4,7 +4,7 @@
   "description": "Export all folders and documents from Quip",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,12 @@
   "homepage": "https://github.com/sonnenkern/quip-export#readme",
   "dependencies": {
     "ejs": "^2.7.1",
+    "eslint-config-aenondynamics": "^0.2.0",
     "mime": "^2.4.4",
+    "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1"
   }
 }

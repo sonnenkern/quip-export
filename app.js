@@ -1,30 +1,35 @@
-const QuipService =  require('./lib/QuipService');
-const QuipProcessor = require('./lib/QuipProcessor');
-const QuipProcessorAnatomy = require('./lib/QuipProcessorAnatomy');
+const fs = require('fs');
+
+const QuipProcessor =  require('./lib/QuipProcessor');
 const utils = require('./lib/utils');
 
 
-const documentTemplate = utils.readFile('./lib/templates/document.ejs');
-const documentCSS = utils.readFile('./lib/templates/document.css');
+const documentTemplate = utils.readTextFile('./lib/templates/document.ejs');
+const documentCSS = utils.readTextFile('./lib/templates/document.css');
 
-function blobSaver(blob, fileName, type, path) {
-    if(type === 'DOCUMENT') {
+function fileSaver(data, fileName, type, path) {
+    if(type === 'BLOB') {
         path = `${path}blobs`;
+        utils.writeBlobFile("/Users/alex/Downloads/" + path + "/" + fileName, data);
+    } else {
+        utils.writeTextFile("/Users/alex/Downloads/" + path + "/" + fileName, data);
     }
-    //zip.folder(path).file(fileName, blob, {base64: true});
-    //FileSaver.saveAs(blob, fileName);
-    console.log("SAVE: ", fileName, "PATH: ", path)
+
+    console.log("SAVE: ", fileName, "PATH: ", path);
 }
 
 function progressFunc(progress) {
     console.log(JSON.stringify(progress, null, 2));
 }
 
+function main() {
+    const quipProcessor = new QuipProcessor('Vk9RQU1BMmRPdlU=|1602966251|ptrt/tYmbr0yosibwnWzE1xxGZSO6qUpgm4PONjp+Ag=', fileSaver, progressFunc, {
+        documentTemplate: documentTemplate
+    });
 
-const quipProcessor = new QuipProcessorAnatomy('Vk9RQU1BS0xlWXU=|1601997827|E86Zjz3yBrPoelRHLBYdp1VYmUSautTO/HqLYBw2A0Y=', blobSaver, progressFunc, {
-    documentTemplate: documentTemplate
-});
+    utils.writeTextFile("/Users/alex/Downloads/document.css", documentCSS);
 
-quipProcessor.startExport().then(() => {
+    quipProcessor.startExport();
+}
 
-});
+main();
