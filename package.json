@@ -25,6 +25,9 @@
   "engines": {
     "node": ">=10.16.1"
   },
+  "bin": {
+    "quip-export": "./quip-export.js"
+  },
   "author": "Alexander Fleming <tech@sonnenkern.com>",
   "license": "MIT",
   "bugs": {

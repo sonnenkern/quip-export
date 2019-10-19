@@ -3,9 +3,8 @@ const fs = require('fs');
 const QuipProcessor =  require('./lib/QuipProcessor');
 const utils = require('./lib/utils');
 
-
-const documentTemplate = utils.readTextFile('./lib/templates/document.ejs');
-const documentCSS = utils.readTextFile('./lib/templates/document.css');
+const documentTemplate = utils.readTextFile(__dirname + '/lib/templates/document.ejs');
+const documentCSS = utils.readTextFile(__dirname + '/lib/templates/document.css');
 
 function fileSaver(data, fileName, type, path) {
     if(type === 'BLOB') {
@@ -23,7 +22,8 @@ function progressFunc(progress) {
 }
 
 function main() {
-    const quipProcessor = new QuipProcessor('Vk9RQU1BMmRPdlU=|1602966251|ptrt/tYmbr0yosibwnWzE1xxGZSO6qUpgm4PONjp+Ag=', fileSaver, progressFunc, {
+    console.log("MAIN");
+    const quipProcessor = new QuipProcessor('Vk9RQU1BYTllSEs=|1603054318|mU687Hug22hqCLAZqKp6+lZi2O3/LVuehyNnFIAb2QI=', fileSaver, progressFunc, {
         documentTemplate: documentTemplate
     });
 
@@ -32,4 +32,4 @@ function main() {
     quipProcessor.startExport();
 }
 
-main();
+module.exports = main;
