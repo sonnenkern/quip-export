@@ -35,10 +35,14 @@
   },
   "homepage": "https://github.com/sonnenkern/quip-export#readme",
   "dependencies": {
+    "cli-progress": "^3.3.1",
+    "cli-spinner": "^0.2.10",
+    "colors": "^1.4.0",
     "ejs": "^2.7.1",
     "mime": "^2.4.4",
     "mkdirp": "^0.5.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "sanitize-filename": "^1.6.3"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
