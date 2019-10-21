@@ -1,20 +1,24 @@
-const fs = require('fs');
+const path =  require('path');
 
 const QuipProcessor =  require('./lib/QuipProcessor');
 const utils = require('./lib/utils');
 
-const documentTemplate = utils.readTextFile(__dirname + '/lib/templates/document.ejs');
-const documentCSS = utils.readTextFile(__dirname + '/lib/templates/document.css');
+const DESTINATION_PATH_WIN = 'C:\\temp';
+const DESTINATION_PATH_MAC = '/Users/alex/Downloads/';
+const DESTINATION_PATH = DESTINATION_PATH_WIN;
 
-function fileSaver(data, fileName, type, path) {
+const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
+const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
+
+function fileSaver(data, fileName, type, filePath) {
     if(type === 'BLOB') {
-        path = `${path}blobs`;
-        utils.writeBlobFile("/Users/alex/Downloads/" + path + "/" + fileName, data);
+        filePath = `${filePath}blobs`;
+        utils.writeBlobFile(path.join(DESTINATION_PATH, filePath, fileName), data);
     } else {
-        utils.writeTextFile("/Users/alex/Downloads/" + path + "/" + fileName, data);
+        utils.writeTextFile(path.join(DESTINATION_PATH, filePath, fileName), data);
     }
 
-    console.log("SAVE: ", fileName, "PATH: ", path);
+    console.log("SAVE: ", fileName, "PATH: ", filePath);
 }
 
 function progressFunc(progress) {
@@ -22,12 +26,11 @@ function progressFunc(progress) {
 }
 
 function main() {
-    console.log("MAIN");
-    const quipProcessor = new QuipProcessor('Vk9RQU1BYTllSEs=|1603054318|mU687Hug22hqCLAZqKp6+lZi2O3/LVuehyNnFIAb2QI=', fileSaver, progressFunc, {
+    const quipProcessor = new QuipProcessor('Vk9RQU1BUVVpT0k=|1603192066|xH3VeBzLrpfO0pmLH2rigFNkAAgDzybiftYw76ovZKs=', fileSaver, progressFunc, {
         documentTemplate: documentTemplate
     });
 
-    utils.writeTextFile("/Users/alex/Downloads/document.css", documentCSS);
+    utils.writeTextFile(path.join(DESTINATION_PATH, 'document.css'), documentCSS);
 
     quipProcessor.startExport();
 }
