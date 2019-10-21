@@ -85,7 +85,7 @@ function phaseFunc(phase, prevPhase) {
 }
 
 function main() {
-    quipProcessor = new QuipProcessor('Vk9RQU1BUVVpT0k=|1603192066|xH3VeBzLrpfO0pmLH2rigFNkAAgDzybiftYw76ovZKs=',
+    quipProcessor = new QuipProcessor('Vk9RQU1BU3dQNUg=|1603207124|JMF0hK5Iz9OB51pi47alGljK+a5WjESTqcDZ/fBbmys=',
         fileSaver,
         progressFunc,
         phaseFunc, {
