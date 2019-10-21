@@ -8,7 +8,7 @@ const utils = require('./lib/utils');
 
 const DESTINATION_PATH_WIN = 'C:\\temp';
 const DESTINATION_PATH_MAC = '/Users/alex/Downloads/';
-const DESTINATION_PATH = DESTINATION_PATH_WIN;
+const DESTINATION_PATH = DESTINATION_PATH_MAC;
 
 const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
@@ -20,12 +20,11 @@ let updateProgess = ()=>{};
 
 function fileSaver(data, fileName, type, filePath) {
     if(type === 'BLOB') {
-        filePath = `${filePath}blobs`;
         utils.writeBlobFile(path.join(DESTINATION_PATH, filePath, fileName), data);
     } else {
         utils.writeTextFile(path.join(DESTINATION_PATH, filePath, fileName), data);
     }
-
+    //console.log(colors.red(DESTINATION_PATH, filePath, fileName, path.join(DESTINATION_PATH, filePath, fileName)));
     //console.log("SAVE: ", fileName, "PATH: ", filePath);
 }
 
@@ -85,7 +84,7 @@ function phaseFunc(phase, prevPhase) {
 }
 
 function main() {
-    quipProcessor = new QuipProcessor('Vk9RQU1BTU5sdkk=|1603208801|gsGeZzSksYOg6u+FwnfJv8z6sS5YCFOFCax+qcOnRSc=',
+    quipProcessor = new QuipProcessor('Vk9RQU1BNGJGbmk=|1603220182|wHpUhJ9zDENksvUBIPjf4xH6+Njh3dNdYtnizldaLJg=',
         fileSaver,
         progressFunc,
         phaseFunc, {
