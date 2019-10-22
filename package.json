@@ -45,7 +45,9 @@
     "mime": "^2.4.4",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0",
-    "sanitize-filename": "^1.6.3"
+    "npmview": "0.0.4",
+    "sanitize-filename": "^1.6.3",
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "eslint": "^6.5.1",

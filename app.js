@@ -102,13 +102,22 @@ function phaseFunc(phase, prevPhase) {
 }
 
 async function  main() {
-    //console.log(); current dir
+    const versionInfo = await utils.getVersionInfo();
+
+    console.log(`Quip-Export v${versionInfo.localVersion}`);
+
+    if(versionInfo.localOutdate) {
+        utils.cliBox(`!!!! A new version of Quip-Export (v${versionInfo.remoteVersion}) is available.`);
+    }
+
     try {
          cliArguments = CliArguments();
     } catch (message) {
         console.log(message);
         return;
     }
+
+
 
     //Token verification
     const quipService = new QuipService(cliArguments.token);
