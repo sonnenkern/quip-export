@@ -122,6 +122,7 @@ async function  main() {
 
     //current folder as destination, if not set
     desinationFolder = (cliArguments.destination || process.cwd()) + "/quip-export";
+    desinationFolderZip = cliArguments.destination || process.cwd();
 
     //activate zip
     if(cliArguments.zip) {
@@ -145,8 +146,8 @@ async function  main() {
         if(cliArguments.zip) {
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
-                fs.writeFile(path.join(desinationFolder, 'quip-export.zip'), content, () => {
-                    console.log("Zip-file has been saved: ", path.join(desinationFolder, 'quip-export.zip'));
+                fs.writeFile(path.join(desinationFolderZip, 'quip-export.zip'), content, () => {
+                    console.log("Zip-file has been saved: ", path.join(desinationFolderZip, 'quip-export.zip'));
                 });
             });
         }
