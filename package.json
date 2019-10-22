@@ -38,6 +38,8 @@
     "cli-progress": "^3.3.1",
     "cli-spinner": "^0.2.10",
     "colors": "^1.4.0",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^6.0.2",
     "ejs": "^2.7.1",
     "mime": "^2.4.4",
     "mkdirp": "^0.5.1",

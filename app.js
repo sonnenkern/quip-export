@@ -4,14 +4,19 @@ const colors = require('colors');
 const cliProgress = require('cli-progress');
 
 const QuipProcessor =  require('./lib/QuipProcessor');
-const utils = require('./lib/utils');
+const QuipService =  require('./lib/QuipService');
+const utils = require('./lib/common/utils');
+const CliArguments = require('./lib/cli/CliArguments');
 
-const DESTINATION_PATH_WIN = 'C:\\temp';
+const DESTINATION_PATH_WIN = 'c:\\temp';
 const DESTINATION_PATH_MAC = '/Users/alex/Downloads/';
-const DESTINATION_PATH = DESTINATION_PATH_MAC;
+const DESTINATION_PATH = DESTINATION_PATH_WIN;
 
 const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
+
+let desinationFolder;
+let cliArguments;
 
 let quipProcessor;
 
@@ -20,9 +25,9 @@ let updateProgess = ()=>{};
 
 function fileSaver(data, fileName, type, filePath) {
     if(type === 'BLOB') {
-        utils.writeBlobFile(path.join(DESTINATION_PATH, filePath, fileName), data);
+        utils.writeBlobFile(path.join(desinationFolder, filePath, fileName), data);
     } else {
-        utils.writeTextFile(path.join(DESTINATION_PATH, filePath, fileName), data);
+        utils.writeTextFile(path.join(desinationFolder, filePath, fileName), data);
     }
     //console.log(colors.red(DESTINATION_PATH, filePath, fileName, path.join(DESTINATION_PATH, filePath, fileName)));
     //console.log("SAVE: ", fileName, "PATH: ", filePath);
@@ -84,14 +89,32 @@ function phaseFunc(phase, prevPhase) {
 }
 
 function main() {
-    quipProcessor = new QuipProcessor('Vk9RQU1BNGJGbmk=|1603220182|wHpUhJ9zDENksvUBIPjf4xH6+Njh3dNdYtnizldaLJg=',
+    //console.log(); current dir
+    try {
+         cliArguments = CliArguments();
+    } catch (message) {
+        console.log(message);
+        return;
+    }
+
+    //Token verification
+    const quipService = new QuipService(cliArguments.token);
+    quipService.getUser().catch(()=> {
+        console.log(colors.red('ERROR: Token is wrong or expired.'));
+        return;
+    });
+
+    //current folder as destination, if not set
+    desinationFolder = (cliArguments.destination || process.cwd()) + "/quip-export";
+
+    quipProcessor = new QuipProcessor(cliArguments.token,
         fileSaver,
         progressFunc,
         phaseFunc, {
         documentTemplate: documentTemplate
     });
 
-    utils.writeTextFile(path.join(DESTINATION_PATH, 'document.css'), documentCSS);
+    utils.writeTextFile(path.join(desinationFolder, 'document.css'), documentCSS);
 
     quipProcessor.startExport();
 }
