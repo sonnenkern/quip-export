@@ -66,7 +66,7 @@ function phaseFunc(phase, prevPhase) {
         process.stdout.write('\n');
 
         progressIndikator = new cliProgress.Bar({
-            format: '   |{bar}' + '| {percentage}% | {value}/{total} threads | ETA: {eta_formatted}',
+            format: '   |{bar}| {percentage}% | {value}/{total} threads | ETA: {eta_formatted}',
             barCompleteChar: '\u2588',
             barIncompleteChar: '\u2591',
             hideCursor: false
