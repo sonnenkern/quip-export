@@ -41,6 +41,7 @@
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.0.2",
     "ejs": "^2.7.1",
+    "jszip": "^3.2.2",
     "mime": "^2.4.4",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0",

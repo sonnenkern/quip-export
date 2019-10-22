@@ -2,6 +2,8 @@ const path =  require('path');
 const Spinner = require('cli-spinner').Spinner;
 const colors = require('colors');
 const cliProgress = require('cli-progress');
+const JSZip = require('jszip');
+const fs = require('fs');
 
 const QuipProcessor =  require('./lib/QuipProcessor');
 const QuipService =  require('./lib/QuipService');
@@ -18,6 +20,8 @@ const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/docu
 let desinationFolder;
 let cliArguments;
 
+let zip;
+
 let quipProcessor;
 
 let spinnerIndikator, progressIndikator;
@@ -25,10 +29,19 @@ let updateProgess = ()=>{};
 
 function fileSaver(data, fileName, type, filePath) {
     if(type === 'BLOB') {
-        utils.writeBlobFile(path.join(desinationFolder, filePath, fileName), data);
+        if(cliArguments.zip) {
+            zip.folder(filePath).file(fileName, data.arrayBuffer());
+        } else {
+            utils.writeBlobFile(path.join(desinationFolder, filePath, fileName), data);
+        }
     } else {
-        utils.writeTextFile(path.join(desinationFolder, filePath, fileName), data);
+        if(cliArguments.zip) {
+            zip.folder(filePath).file(fileName, data);
+        } else {
+            utils.writeTextFile(path.join(desinationFolder, filePath, fileName), data);
+        }
     }
+
     //console.log(colors.red(DESTINATION_PATH, filePath, fileName, path.join(DESTINATION_PATH, filePath, fileName)));
     //console.log("SAVE: ", fileName, "PATH: ", filePath);
 }
@@ -88,7 +101,7 @@ function phaseFunc(phase, prevPhase) {
     }
 }
 
-function main() {
+async function  main() {
     //console.log(); current dir
     try {
          cliArguments = CliArguments();
@@ -99,13 +112,21 @@ function main() {
 
     //Token verification
     const quipService = new QuipService(cliArguments.token);
-    quipService.getUser().catch(()=> {
+
+    try {
+        await quipService.getUser();
+    } catch (e) {
         console.log(colors.red('ERROR: Token is wrong or expired.'));
         return;
-    });
+    }
 
     //current folder as destination, if not set
     desinationFolder = (cliArguments.destination || process.cwd()) + "/quip-export";
+
+    //activate zip
+    if(cliArguments.zip) {
+        zip = new JSZip();
+    }
 
     quipProcessor = new QuipProcessor(cliArguments.token,
         fileSaver,
@@ -114,9 +135,22 @@ function main() {
         documentTemplate: documentTemplate
     });
 
-    utils.writeTextFile(path.join(desinationFolder, 'document.css'), documentCSS);
+    if(cliArguments.zip) {
+        zip.file('document.css', documentCSS);
+    } else {
+        utils.writeTextFile(path.join(desinationFolder, 'document.css'), documentCSS);
+    }
 
-    quipProcessor.startExport();
+    quipProcessor.startExport().then(() => {
+        if(cliArguments.zip) {
+            //save zip file
+            zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
+                fs.writeFile(path.join(desinationFolder, 'quip-export.zip'), content, () => {
+                    console.log("Zip-file has been saved: ", path.join(desinationFolder, 'quip-export.zip'));
+                });
+            });
+        }
+    });
 }
 
 module.exports = main;
