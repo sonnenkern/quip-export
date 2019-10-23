@@ -16,6 +16,8 @@ In that case is the Quip-Export project a goot usage example.
  
 Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or JavaScript (browser) environment.  
 
+![Example image](https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example.png)
+
 ## Install
 As mentioned before, Quip-Export tool needs Node.js (version 10.16 or higher) environment.
 Node.js version check:
