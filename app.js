@@ -10,23 +10,21 @@ const QuipService =  require('./lib/QuipService');
 const utils = require('./lib/common/utils');
 const CliArguments = require('./lib/cli/CliArguments');
 
-const DESTINATION_PATH_WIN = 'c:\\temp';
-const DESTINATION_PATH_MAC = '/Users/alex/Downloads/';
-const DESTINATION_PATH = DESTINATION_PATH_WIN;
-
+//EJS template for html documents
 const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
+//CSS style for html documents
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
 
 let desinationFolder;
 let cliArguments;
-
 let zip;
-
 let quipProcessor;
-
-let spinnerIndikator, progressIndikator;
+let spinnerIndicator, progressIndicator;
 let updateProgess = ()=>{};
 
+/*
+callback-function for file saving
+*/
 function fileSaver(data, fileName, type, filePath) {
     if(type === 'BLOB') {
         if(cliArguments.zip) {
@@ -41,15 +39,24 @@ function fileSaver(data, fileName, type, filePath) {
             utils.writeTextFile(path.join(desinationFolder, filePath, fileName), data);
         }
     }
-
-    //console.log(colors.red(DESTINATION_PATH, filePath, fileName, path.join(DESTINATION_PATH, filePath, fileName)));
-    //console.log("SAVE: ", fileName, "PATH: ", filePath);
 }
 
+/*
+callback-function for progress indication
+ */
 function progressFunc(progress) {
     updateProgess(progress);
 }
 
+
+/*
+callback-function for export life cycle phases
+available phases:
+    START - start of process
+    STOP -  end of process
+    ANALYSE - folder/threads stucture analyse
+    EXPORT - export
+ */
 function phaseFunc(phase, prevPhase) {
     if(phase === 'START') {
         process.stdout.write(colors.gray(`Quip API: ${quipProcessor.quipService.apiURL}`));
@@ -61,20 +68,20 @@ function phaseFunc(phase, prevPhase) {
         process.stdout.write(colors.cyan('Starting analyse...'));
         process.stdout.write('\n');
 
-        spinnerIndikator = new Spinner(' %s  read 0 folder(s) | 0 thread(s)');
-        spinnerIndikator.setSpinnerDelay(80);
-        spinnerIndikator.setSpinnerString("|/-\\");
+        spinnerIndicator = new Spinner(' %s  read 0 folder(s) | 0 thread(s)');
+        spinnerIndicator.setSpinnerDelay(80);
+        spinnerIndicator.setSpinnerString("|/-\\");
 
         updateProgess = (progress) => {
-            spinnerIndikator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
+            spinnerIndicator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
         };
 
-        spinnerIndikator.start();
+        spinnerIndicator.start();
     }
 
     if(prevPhase === 'ANALYSE') {
-        spinnerIndikator.onTick(`    read ${quipProcessor.foldersTotal} folder(s) | ${quipProcessor.threadsTotal} thread(s)`);
-        spinnerIndikator.stop();
+        spinnerIndicator.onTick(`    read ${quipProcessor.foldersTotal} folder(s) | ${quipProcessor.threadsTotal} thread(s)`);
+        spinnerIndicator.stop();
         process.stdout.write('\n');
     }
 
@@ -83,24 +90,25 @@ function phaseFunc(phase, prevPhase) {
         process.stdout.write(colors.cyan('Starting export...'));
         process.stdout.write('\n');
 
-        progressIndikator = new cliProgress.Bar({
+        progressIndicator = new cliProgress.Bar({
             format: '   |{bar}| {percentage}% | {value}/{total} threads | ETA: {eta_formatted}',
             barCompleteChar: '\u2588',
             barIncompleteChar: '\u2591',
             hideCursor: false
         });
-        progressIndikator.start(quipProcessor.threadsTotal, 0);
+        progressIndicator.start(quipProcessor.threadsTotal, 0);
         updateProgess = (progress) => {
-            progressIndikator.update(progress.threadsProcessed);
+            progressIndicator.update(progress.threadsProcessed);
         };
     }
 
     if(prevPhase === 'EXPORT') {
-        progressIndikator.stop();
+        progressIndicator.stop();
         process.stdout.write('\n');
     }
 }
 
+//main entry point
 async function  main() {
     const versionInfo = await utils.getVersionInfo();
 
@@ -110,6 +118,7 @@ async function  main() {
         utils.cliBox(`!!!! A new version of Quip-Export (v${versionInfo.remoteVersion}) is available.`);
     }
 
+    //cli arguments parsing and validation
     try {
          cliArguments = CliArguments();
     } catch (message) {
@@ -117,11 +126,8 @@ async function  main() {
         return;
     }
 
-
-
     //Token verification
     const quipService = new QuipService(cliArguments.token);
-
     try {
         await quipService.getUser();
     } catch (e) {
@@ -131,7 +137,6 @@ async function  main() {
 
     //current folder as destination, if not set
     desinationFolder = (cliArguments.destination || process.cwd()) + "/quip-export";
-    desinationFolderZip = cliArguments.destination || process.cwd();
 
     //activate zip
     if(cliArguments.zip) {
@@ -141,9 +146,7 @@ async function  main() {
     quipProcessor = new QuipProcessor(cliArguments.token,
         fileSaver,
         progressFunc,
-        phaseFunc, {
-        documentTemplate: documentTemplate
-    });
+        phaseFunc, {documentTemplate});
 
     if(cliArguments.zip) {
         zip.file('document.css', documentCSS);
@@ -153,6 +156,7 @@ async function  main() {
 
     quipProcessor.startExport().then(() => {
         if(cliArguments.zip) {
+            const desinationFolderZip = cliArguments.destination || process.cwd();
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
                 fs.writeFile(path.join(desinationFolderZip, 'quip-export.zip'), content, () => {
