@@ -82,7 +82,7 @@ quip-export -t "JHHHK222333444LLL1=" -z
 ```
 
 ## Troubleshooting
-Quip-Export is strongly depend the public [Quip Automation API](https://quip.com/dev/automation/documentation).
+Quip-Export is strongly depend on the public [Quip Automation API](https://quip.com/dev/automation/documentation).
 It is possible, that some problems will occur, if Quip Automation API would be changed.
 
 In this case please be free to contact [quip@sonnenkern.com](quip@sonnenkern.com).
