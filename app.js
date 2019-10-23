@@ -30,13 +30,13 @@ function fileSaver(data, fileName, type, filePath) {
         if(cliArguments.zip) {
             zip.folder(filePath).file(fileName, data.arrayBuffer());
         } else {
-            utils.writeBlobFile(path.join(desinationFolder, filePath, fileName), data);
+            utils.writeBlobFile(path.join(desinationFolder, "quip-export", filePath, fileName), data);
         }
     } else {
         if(cliArguments.zip) {
             zip.folder(filePath).file(fileName, data);
         } else {
-            utils.writeTextFile(path.join(desinationFolder, filePath, fileName), data);
+            utils.writeTextFile(path.join(desinationFolder, "quip-export", filePath, fileName), data);
         }
     }
 }
@@ -136,7 +136,8 @@ async function  main() {
     }
 
     //current folder as destination, if not set
-    desinationFolder = (cliArguments.destination || process.cwd()) + "/quip-export";
+    desinationFolder = (cliArguments.destination || process.cwd());
+    console.log(`Destination folder: ${desinationFolder}`);
 
     //activate zip
     if(cliArguments.zip) {
@@ -151,16 +152,15 @@ async function  main() {
     if(cliArguments.zip) {
         zip.file('document.css', documentCSS);
     } else {
-        utils.writeTextFile(path.join(desinationFolder, 'document.css'), documentCSS);
+        utils.writeTextFile(path.join(desinationFolder, "quip-export", 'document.css'), documentCSS);
     }
 
     quipProcessor.startExport().then(() => {
         if(cliArguments.zip) {
-            const desinationFolderZip = cliArguments.destination || process.cwd();
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
-                fs.writeFile(path.join(desinationFolderZip, 'quip-export.zip'), content, () => {
-                    console.log("Zip-file has been saved: ", path.join(desinationFolderZip, 'quip-export.zip'));
+                fs.writeFile(path.join(desinationFolder, 'quip-export.zip'), content, () => {
+                    console.log("Zip-file has been saved: ", path.join(desinationFolder, 'quip-export.zip'));
                 });
             });
         }
