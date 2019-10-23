@@ -83,6 +83,6 @@ quip-export -t "JHHHK222333444LLL1=" -z
 
 ## Troubleshooting
 Quip-Export is strongly depend on the public [Quip Automation API](https://quip.com/dev/automation/documentation).
-It is possible, that some problems will occur, if Quip Automation API would be changed.
+It is possible, that some problems will occur, if Quip Automation API changed. Then Quip-Export adjusment is nessesary.
 
 In this case please be free to contact [quip@sonnenkern.com](quip@sonnenkern.com).
