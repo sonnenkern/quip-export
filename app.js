@@ -112,18 +112,18 @@ function phaseFunc(phase, prevPhase) {
 async function  main() {
     const versionInfo = await utils.getVersionInfo();
 
-    console.log(`Quip-Export v${versionInfo.localVersion}`);
-
-    if(versionInfo.localOutdate) {
-        utils.cliBox(`!!!! A new version of Quip-Export (v${versionInfo.remoteVersion}) is available.`);
-    }
-
     //cli arguments parsing and validation
     try {
          cliArguments = CliArguments();
     } catch (message) {
         console.log(message);
         return;
+    }
+
+    console.log(`Quip-Export v${versionInfo.localVersion}`);
+
+    if(versionInfo.localOutdate) {
+        utils.cliBox(`!!!! A new version of Quip-Export (v${versionInfo.remoteVersion}) is available.`);
     }
 
     //Token verification
@@ -155,7 +155,12 @@ async function  main() {
         utils.writeTextFile(path.join(desinationFolder, "quip-export", 'document.css'), documentCSS);
     }
 
-    quipProcessor.startExport().then(() => {
+    let foldersToExport = [
+        //'XJXAOAeNRdL'
+        //'GdFAOAxht8Y'
+    ];
+
+    quipProcessor.startExport(foldersToExport).then(() => {
         if(cliArguments.zip) {
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
