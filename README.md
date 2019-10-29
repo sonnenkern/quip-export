@@ -17,7 +17,7 @@ In that case, the Quip-Export project is a good usage example.
 Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or JavaScript (browser) environment.  
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example.png">
+  <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example-anim.gif">
 </p>
 
 ## Install

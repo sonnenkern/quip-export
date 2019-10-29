@@ -54,7 +54,7 @@ callback-function for export life cycle phases
 available phases:
     START - start of process
     STOP -  end of process
-    ANALYSE - folder/threads stucture analyse
+    ANALYSIS - folder/threads structure analysis
     EXPORT - export
  */
 function phaseFunc(phase, prevPhase) {
@@ -63,9 +63,9 @@ function phaseFunc(phase, prevPhase) {
         process.stdout.write('\n');
     }
 
-    if (phase === 'ANALYSE'){
+    if (phase === 'ANALYSIS'){
         process.stdout.write('\n');
-        process.stdout.write(colors.cyan('Starting analyse...'));
+        process.stdout.write(colors.cyan('Analysing folders...'));
         process.stdout.write('\n');
 
         spinnerIndicator = new Spinner(' %s  read 0 folder(s) | 0 thread(s)');
@@ -79,7 +79,7 @@ function phaseFunc(phase, prevPhase) {
         spinnerIndicator.start();
     }
 
-    if(prevPhase === 'ANALYSE') {
+    if(prevPhase === 'ANALYSIS') {
         spinnerIndicator.onTick(`    read ${quipProcessor.foldersTotal} folder(s) | ${quipProcessor.threadsTotal} thread(s)`);
         spinnerIndicator.stop();
         process.stdout.write('\n');
@@ -87,7 +87,7 @@ function phaseFunc(phase, prevPhase) {
 
     if(phase === 'EXPORT') {
         process.stdout.write('\n');
-        process.stdout.write(colors.cyan('Starting export...'));
+        process.stdout.write(colors.cyan('Exporting...'));
         process.stdout.write('\n');
 
         progressIndicator = new cliProgress.Bar({
@@ -158,6 +158,7 @@ async function  main() {
     let foldersToExport = [
         //'XJXAOAeNRdL'
         //'GdFAOAxht8Y'
+        //'EVZAOAW2e6U'
     ];
 
     quipProcessor.startExport(foldersToExport).then(() => {
