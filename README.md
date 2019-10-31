@@ -81,6 +81,14 @@ Export in Zip-file with current folder as destination
 quip-export -t "JHHHK222333444LLL1=" -z
 ```
 
+## Demo
+Live demo of usage of Quip-Export package is available on [quip-export.com](http://quip-export.com)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
+</p>
+ 
+
 ## Troubleshooting
 Quip-Export is strongly depending on the public [Quip Automation API](https://quip.com/dev/automation/documentation).
 It is possible that some problems will occur if Quip Automation API is changed. Then Quip-Export adjustment is necessary.
