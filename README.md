@@ -82,7 +82,7 @@ quip-export -t "JHHHK222333444LLL1=" -z
 ```
 
 ## Demo
-Live demo of usage of Quip-Export package is available on [quip-export.com](http://quip-export.com)
+Live demo of usage of Quip-Export package is available on [www.quip-export.com](http://www.quip-export.com)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
@@ -93,4 +93,4 @@ Live demo of usage of Quip-Export package is available on [quip-export.com](http
 Quip-Export is strongly depending on the public [Quip Automation API](https://quip.com/dev/automation/documentation).
 It is possible that some problems will occur if Quip Automation API is changed. Then Quip-Export adjustment is necessary.
 
-In this case or other questions, please feel free to contact [quip@sonnenkern.com](quip@sonnenkern.com).
+In this case or other questions, please feel free to contact [info@quip-export.com](info@quip-export.com).
