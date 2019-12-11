@@ -112,16 +112,6 @@ function phaseFunc(phase, prevPhase) {
     }
 }
 
-async function tryCatch(func, message) {
-    return new Promise((resolve) => {
-        func().then(res => resolve(res)).catch((e) => {
-            if(message) { Logger.error(message); }
-            Logger.error(e);
-            resolve();
-        });
-    });
-}
-
 //main entry point
 async function  main() {
     const versionInfo = await utils.getVersionInfo();
@@ -142,9 +132,9 @@ async function  main() {
 
     //Token verification
     const quipService = new QuipService(cliArguments.token);
-    try {
-        await tryCatch(() => quipService.getUser());
-    } catch (e) {
+    quipService.setLogger(Logger);
+
+    if(!await quipService.checkUser()) {
         console.log(colors.red('ERROR: Token is wrong or expired.'));
         return;
     }
@@ -158,10 +148,8 @@ async function  main() {
         zip = new JSZip();
     }
 
-    quipProcessor = new QuipProcessor(cliArguments.token,
-        fileSaver,
-        progressFunc,
-        phaseFunc, Logger,{documentTemplate});
+    quipProcessor = new QuipProcessor(cliArguments.token, fileSaver, progressFunc, phaseFunc, {documentTemplate});
+    quipProcessor.setLogger(Logger);
 
     if(cliArguments.zip) {
         zip.file('document.css', documentCSS);
@@ -176,6 +164,7 @@ async function  main() {
     ];
 
     quipProcessor.startExport(foldersToExport).then(() => {
+        Logger.info(quipProcessor.quipService.stats);
         if(cliArguments.zip) {
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
