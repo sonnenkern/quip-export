@@ -4,7 +4,9 @@ const colors = require('colors');
 const cliProgress = require('cli-progress');
 const JSZip = require('jszip');
 const fs = require('fs');
+const PinoLogger =  require('./lib/common/PinoLogger');
 
+const Logger = new PinoLogger();
 const QuipProcessor =  require('./lib/QuipProcessor');
 const QuipService =  require('./lib/QuipService');
 const utils = require('./lib/common/utils');
@@ -14,6 +16,8 @@ const CliArguments = require('./lib/cli/CliArguments');
 const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
 //CSS style for html documents
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
+
+
 
 let desinationFolder;
 let cliArguments;
@@ -108,6 +112,16 @@ function phaseFunc(phase, prevPhase) {
     }
 }
 
+async function tryCatch(func, message) {
+    return new Promise((resolve) => {
+        func().then(res => resolve(res)).catch((e) => {
+            if(message) { Logger.error(message); }
+            Logger.error(e);
+            resolve();
+        });
+    });
+}
+
 //main entry point
 async function  main() {
     const versionInfo = await utils.getVersionInfo();
@@ -129,7 +143,7 @@ async function  main() {
     //Token verification
     const quipService = new QuipService(cliArguments.token);
     try {
-        await quipService.getUser();
+        await tryCatch(() => quipService.getUser());
     } catch (e) {
         console.log(colors.red('ERROR: Token is wrong or expired.'));
         return;
@@ -147,7 +161,7 @@ async function  main() {
     quipProcessor = new QuipProcessor(cliArguments.token,
         fileSaver,
         progressFunc,
-        phaseFunc, {documentTemplate});
+        phaseFunc, Logger,{documentTemplate});
 
     if(cliArguments.zip) {
         zip.file('document.css', documentCSS);

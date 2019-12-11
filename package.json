@@ -46,6 +46,8 @@
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0",
     "npmview": "0.0.4",
+    "pino": "~5.14.0",
+    "pino-pretty": "^3.5.0",
     "sanitize-filename": "^1.6.3",
     "semver": "^6.3.0"
   },
