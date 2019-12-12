@@ -4,6 +4,7 @@ const colors = require('colors');
 const cliProgress = require('cli-progress');
 const JSZip = require('jszip');
 const fs = require('fs');
+const PinoLogger =  require('./lib/common/PinoLogger');
 
 const QuipProcessor =  require('./lib/QuipProcessor');
 const QuipService =  require('./lib/QuipService');
@@ -15,6 +16,8 @@ const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates
 //CSS style for html documents
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
 
+
+let Logger;
 let desinationFolder;
 let cliArguments;
 let zip;
@@ -120,6 +123,15 @@ async function  main() {
         return;
     }
 
+    //current folder as destination, if not set
+    desinationFolder = (cliArguments.destination || process.cwd());
+
+    if(cliArguments.debug) {
+        Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${desinationFolder}export.log`);
+    } else {
+        Logger = new PinoLogger(PinoLogger.LEVELS.INFO, `${desinationFolder}export.log`);
+    }
+
     console.log(`Quip-Export v${versionInfo.localVersion}`);
 
     if(versionInfo.localOutdate) {
@@ -128,15 +140,13 @@ async function  main() {
 
     //Token verification
     const quipService = new QuipService(cliArguments.token);
-    try {
-        await quipService.getUser();
-    } catch (e) {
+    quipService.setLogger(Logger);
+
+    if(!await quipService.checkUser()) {
         console.log(colors.red('ERROR: Token is wrong or expired.'));
         return;
     }
 
-    //current folder as destination, if not set
-    desinationFolder = (cliArguments.destination || process.cwd());
     console.log(`Destination folder: ${desinationFolder}`);
 
     //activate zip
@@ -144,10 +154,8 @@ async function  main() {
         zip = new JSZip();
     }
 
-    quipProcessor = new QuipProcessor(cliArguments.token,
-        fileSaver,
-        progressFunc,
-        phaseFunc, {documentTemplate});
+    quipProcessor = new QuipProcessor(cliArguments.token, fileSaver, progressFunc, phaseFunc, {documentTemplate});
+    quipProcessor.setLogger(Logger);
 
     if(cliArguments.zip) {
         zip.file('document.css', documentCSS);
@@ -162,6 +170,7 @@ async function  main() {
     ];
 
     quipProcessor.startExport(foldersToExport).then(() => {
+        Logger.debug(quipProcessor.quipService.stats);
         if(cliArguments.zip) {
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
