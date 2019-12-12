@@ -63,6 +63,7 @@ npm install quip-export
   -t, --token string         Quip Access Token.
   -d, --destination string   Destination folder for export files
   -z, --zip                  Zip export files
+  --group-folder             Optional group folder export
   --debug                    Extended logging
 ```
 

@@ -128,6 +128,7 @@ async function  main() {
     //current folder as destination, if not set
     desinationFolder = (cliArguments.destination || process.cwd());
 
+
     if(cliArguments.debug) {
         Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${desinationFolder}/export.log`);
     } else {
@@ -156,7 +157,8 @@ async function  main() {
         zip = new JSZip();
     }
 
-    quipProcessor = new QuipProcessor(cliArguments.token, fileSaver, progressFunc, phaseFunc, {documentTemplate});
+    quipProcessor = new QuipProcessor(cliArguments.token, fileSaver, progressFunc, phaseFunc,
+        {documentTemplate, groupFolder: cliArguments['group-folder']});
     quipProcessor.setLogger(Logger);
 
     if(cliArguments.zip) {
