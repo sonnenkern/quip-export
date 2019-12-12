@@ -129,9 +129,9 @@ async function  main() {
     desinationFolder = (cliArguments.destination || process.cwd());
 
     if(cliArguments.debug) {
-        Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${desinationFolder}export.log`);
+        Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${desinationFolder}/export.log`);
     } else {
-        Logger = new PinoLogger(PinoLogger.LEVELS.INFO, `${desinationFolder}export.log`);
+        Logger = new PinoLogger(PinoLogger.LEVELS.INFO, `${desinationFolder}/export.log`);
     }
 
     console.log(`Quip-Export v${versionInfo.localVersion}`);
