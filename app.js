@@ -4,8 +4,10 @@ const colors = require('colors');
 const cliProgress = require('cli-progress');
 const JSZip = require('jszip');
 const fs = require('fs');
-const PinoLogger =  require('./lib/common/PinoLogger');
 
+//PinoLogger implements LoggerAdapter-Interface
+//It is possible to use another logger instead of PinoLogger
+const PinoLogger =  require('./lib/common/PinoLogger');
 const QuipProcessor =  require('./lib/QuipProcessor');
 const QuipService =  require('./lib/QuipService');
 const utils = require('./lib/common/utils');
