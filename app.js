@@ -6,7 +6,6 @@ const JSZip = require('jszip');
 const fs = require('fs');
 const PinoLogger =  require('./lib/common/PinoLogger');
 
-const Logger = new PinoLogger();
 const QuipProcessor =  require('./lib/QuipProcessor');
 const QuipService =  require('./lib/QuipService');
 const utils = require('./lib/common/utils');
@@ -18,7 +17,7 @@ const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
 
 
-
+let Logger;
 let desinationFolder;
 let cliArguments;
 let zip;
@@ -124,6 +123,15 @@ async function  main() {
         return;
     }
 
+    //current folder as destination, if not set
+    desinationFolder = (cliArguments.destination || process.cwd());
+
+    if(cliArguments.debug) {
+        Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${desinationFolder}export.log`);
+    } else {
+        Logger = new PinoLogger(PinoLogger.LEVELS.INFO, `${desinationFolder}export.log`);
+    }
+
     console.log(`Quip-Export v${versionInfo.localVersion}`);
 
     if(versionInfo.localOutdate) {
@@ -139,8 +147,6 @@ async function  main() {
         return;
     }
 
-    //current folder as destination, if not set
-    desinationFolder = (cliArguments.destination || process.cwd());
     console.log(`Destination folder: ${desinationFolder}`);
 
     //activate zip
@@ -164,7 +170,7 @@ async function  main() {
     ];
 
     quipProcessor.startExport(foldersToExport).then(() => {
-        Logger.info(quipProcessor.quipService.stats);
+        Logger.debug(quipProcessor.quipService.stats);
         if(cliArguments.zip) {
             //save zip file
             zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {

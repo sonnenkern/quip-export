@@ -63,6 +63,7 @@ npm install quip-export
   -t, --token string         Quip Access Token.
   -d, --destination string   Destination folder for export files
   -z, --zip                  Zip export files
+  --debug                    Extended logging
 ```
 
 To generate a personal access token, visit the page: [https://quip.com/dev/token](https://quip.com/dev/token)
@@ -87,7 +88,9 @@ Live demo of usage of Quip-Export package is available on [www.quip-export.com](
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
 </p>
- 
+
+## Logging
+The export errors are written to file export.log in the destination folder.
 
 ## Troubleshooting
 Quip-Export is strongly depending on the public [Quip Automation API](https://quip.com/dev/automation/documentation).
