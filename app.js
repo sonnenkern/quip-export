@@ -158,13 +158,19 @@ async function  main() {
     }
 
     quipProcessor = new QuipProcessor(cliArguments.token, fileSaver, progressFunc, phaseFunc,
-        {documentTemplate, groupFolder: cliArguments['group-folder']});
+        {
+            documentTemplate,
+            documentCSS: cliArguments['embedded-styles']? documentCSS : '',
+            groupFolder: cliArguments['group-folder'],
+        });
     quipProcessor.setLogger(Logger);
 
-    if(cliArguments.zip) {
-        zip.file('document.css', documentCSS);
-    } else {
-        utils.writeTextFile(path.join(desinationFolder, "quip-export", 'document.css'), documentCSS);
+    if(!cliArguments['embedded-styles']) {
+        if(cliArguments.zip) {
+            zip.file('document.css', documentCSS);
+        } else {
+            utils.writeTextFile(path.join(desinationFolder, "quip-export", 'document.css'), documentCSS);
+        }
     }
 
     let foldersToExport = [

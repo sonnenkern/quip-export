@@ -64,6 +64,7 @@ npm install quip-export
   -d, --destination string   Destination folder for export files
   -z, --zip                  Zip export files
   --group-folder             Optional group folder export
+  --embedded-styles          Embedded stylesheet in each document
   --debug                    Extended logging
 ```
 
