@@ -162,6 +162,7 @@ async function  main() {
             documentTemplate,
             documentCSS: cliArguments['embedded-styles']? documentCSS : '',
             groupFolder: cliArguments['group-folder'],
+            embeddedImages: cliArguments['embedded-images']
         });
     quipProcessor.setLogger(Logger);
 
