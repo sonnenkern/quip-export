@@ -85,8 +85,8 @@ Export in Zip-file with current folder as destination
 quip-export -t "JHHHK222333444LLL1=" -z
 ```
 
-## Demo
-Live demo of usage of Quip-Export package is available on [www.quip-export.com](http://www.quip-export.com)
+## Online web app and demo
+Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](http://www.quip-export.com)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
