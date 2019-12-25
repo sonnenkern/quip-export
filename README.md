@@ -6,7 +6,6 @@ The documents are exported as HTML files with original Quip styling.
 All referenced files and images in Quip document are saved in 'blobs' folder. 
 Quip-Export allows optionally to export in a zip-file.
 
-Current version exports only Private and Shared Quip-folders. 
 Slides are not supported (due to poor quality of generated PDFs).
 
 Sometimes the export process goes not smooth and fast enough due to Quip API rate limits (HTTP 503: Over Rate Limit).
@@ -20,13 +19,19 @@ Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or Java
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example-anim.gif">
 </p>
 
-## Install
+## Install and usage
 As mentioned before, Quip-Export tool needs Node.js (version 10.16 or higher) environment.
 Node.js version check:
 ```
 node -v
 ```
 If Node.js is not installed or the version is lower than 10.16, please follow install/update instructions on [Node.js website](https://nodejs.org/en/).
+
+### Use without install locally
+```
+npx quip-export [options]
+```
+Advantage: you always run the latest version.
 
 ### Install and usage as global npm package
 Install:
