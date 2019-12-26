@@ -27,7 +27,7 @@ node -v
 ```
 If Node.js is not installed or the version is lower than 10.16, please follow install/update instructions on [Node.js website](https://nodejs.org/en/).
 
-### Use without install locally
+### Use without installing locally
 ```
 npx quip-export [options]
 ```
@@ -68,7 +68,6 @@ npm install quip-export
   -t, --token string         Quip Access Token.
   -d, --destination string   Destination folder for export files
   -z, --zip                  Zip export files
-  --group-folder             Optional group folder export
   --embedded-styles          Embedded in each document stylesheet
   --embedded-images          Embedded images
   --debug                    Extended logging
