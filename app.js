@@ -174,8 +174,8 @@ async function  main() {
     }
 
     let foldersToExport = [
-        //'XJXAOAeNRdL'
-        //'GdFAOAxht8Y'
+        //'FOLDER-1'
+        //'FOLDER-2'
         //'EVZAOAW2e6U'
     ];
 

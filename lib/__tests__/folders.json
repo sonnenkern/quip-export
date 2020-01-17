@@ -1,55 +1,55 @@
 {
-  "XJXAOAeNRdL":
+  "FOLDER-1":
     {
       "folder":
         {
           "title":"Programming",
-          "creator_id":"VOQAEArheMG",
-          "parent_id":"BMBAOAKK4z9",
+          "creator_id":"CREATORID",
+          "parent_id":"PARENTID",
           "color":"manila",
-          "id":"XJXAOAeNRdL",
+          "id":"FOLDER-1",
           "created_usec":1438720016926712,
           "updated_usec":1578634632315324
         },
       "member_ids":[],
       "children":
         [
-          {"folder_id":"BOGAOALAr3z"},
-          {"folder_id":"DTGAOAiEHQ1"},
-          {"folder_id":"NBaAOAhFXJJ"},
-          {"folder_id":"HNXAOAHbk66"},
-          {"folder_id":"eQXAOAi23P3"},
-          {"folder_id":"GdFAOAxht8Y"},
-          {"folder_id":"EQaAOANkiuY"},
-          {"folder_id":"ZBMAOAqah6m"},
-          {"folder_id":"KWdAOA43fg1"},
-          {"thread_id":"cUCAAAL68KG"},
-          {"thread_id":"XJaAAAaWOGi"},
-          {"folder_id":"FVUAOAQmKVd"},
-          {"folder_id":"YQdAOAynGNO"},
-          {"thread_id":"HRYAAAlv7vG"},
-          {"folder_id":"NZYAOAwVT0x"},
-          {"folder_id":"KYfAOANeDvL"}
+          {"folder_id":"F1"},
+          {"folder_id":"F2"},
+          {"folder_id":"F3"},
+          {"folder_id":"F4"},
+          {"folder_id":"F5"},
+          {"folder_id":"F6"},
+          {"folder_id":"F7"},
+          {"folder_id":"F8"},
+          {"folder_id":"F9"},
+          {"thread_id":"T1"},
+          {"thread_id":"T2"},
+          {"folder_id":"F10"},
+          {"folder_id":"F11"},
+          {"thread_id":"T3"},
+          {"folder_id":"F12"},
+          {"folder_id":"F13"}
         ]
     },
-  "GdFAOAxht8Y":
+  "FOLDER-2":
     {
       "folder":
         {
           "title":"Git",
-          "creator_id":"VOQAEArheMG",
-          "parent_id":"XJXAOAeNRdL",
+          "creator_id":"CREATORID",
+          "parent_id":"PARENTID",
           "color":"manila",
-          "id":"GdFAOAxht8Y",
+          "id":"FOLDER-2",
           "created_usec":1532722544470138,
           "updated_usec":1577953349425750
         },
       "member_ids":[],
       "children":
         [
-          {"thread_id":"KHcAAA6y4wa"},
-          {"thread_id":"bFZAAAULgso"},
-          {"thread_id":"RcPAAAGs6PU"}
+          {"thread_id":"T1"},
+          {"thread_id":"T2"},
+          {"thread_id":"T3"}
         ]
     }
 }
