@@ -2,4 +2,5 @@
 
 'use strict';
 
-require('./app')();
+const {App} = require('./app');
+App.main();
