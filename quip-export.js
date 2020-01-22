@@ -3,4 +3,4 @@
 'use strict';
 
 const {App} = require('./app');
-App.main();
+(new App()).main();

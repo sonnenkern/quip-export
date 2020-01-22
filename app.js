@@ -18,7 +18,7 @@ const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates
 //CSS style for html documents
 const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
 
-class Application {
+class App {
     constructor() {
         this.Logger = {};
         this.desinationFolder;
@@ -33,6 +33,85 @@ class Application {
             hideCursor: false
         });
         this.updateProgess = ()=>{};
+    }
+
+    /*
+    callback-function for file saving
+    */
+    fileSaver(data, fileName, type, filePath) {
+        if(type === 'BLOB') {
+            if(this.cliArguments.zip) {
+                this.zip.folder(filePath).file(fileName, data.arrayBuffer());
+            } else {
+                utils.writeBlobFile(path.join(this.desinationFolder, "quip-export", filePath, fileName), data);
+            }
+        } else {
+            if(this.cliArguments.zip) {
+                this.zip.folder(filePath).file(fileName, data);
+            } else {
+                utils.writeTextFile(path.join(this.desinationFolder, "quip-export", filePath, fileName), data);
+            }
+        }
+    }
+
+    /*
+    callback-function for progress indication
+    */
+    progressFunc(progress) {
+        this.updateProgess(progress);
+    }
+
+    /*
+    callback-function for export life cycle phases
+    available phases:
+        START - start of process
+        STOP -  end of process
+        ANALYSIS - folder/threads structure analysis
+        EXPORT - export
+     */
+    phaseFunc(phase, prevPhase) {
+        if(phase === 'START') {
+            process.stdout.write(colors.gray(`Quip API: ${this.quipProcessor.quipService.apiURL}`));
+            process.stdout.write('\n');
+        }
+
+        if (phase === 'ANALYSIS'){
+            process.stdout.write('\n');
+            process.stdout.write(colors.cyan('Analysing folders...'));
+            process.stdout.write('\n');
+
+            this.spinnerIndicator.setSpinnerDelay(80);
+            this.spinnerIndicator.setSpinnerString("|/-\\");
+
+            this.updateProgess = (progress) => {
+                this.spinnerIndicator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
+            };
+
+            this.spinnerIndicator.start();
+        }
+
+        if(prevPhase === 'ANALYSIS') {
+            this.spinnerIndicator.onTick(`    read ${this.quipProcessor.foldersTotal} folder(s) | ${this.quipProcessor.threadsTotal} thread(s)`);
+            this.spinnerIndicator.stop();
+            process.stdout.write('\n');
+        }
+
+        if(phase === 'EXPORT') {
+            process.stdout.write('\n');
+            process.stdout.write(colors.cyan('Exporting...'));
+            process.stdout.write('\n');
+
+
+            this.progressIndicator.start(this.quipProcessor.threadsTotal, 0);
+            this.updateProgess = (progress) => {
+                this.progressIndicator.update(progress.threadsProcessed);
+            };
+        }
+
+        if(prevPhase === 'EXPORT') {
+            this.progressIndicator.stop();
+            process.stdout.write('\n');
+        }
     }
 
     //main entry point
@@ -79,7 +158,7 @@ class Application {
             this.zip = new JSZip();
         }
 
-        this.quipProcessor = new QuipProcessor(this.cliArguments.token, fileSaver, progressFunc, phaseFunc,
+        this.quipProcessor = new QuipProcessor(this.cliArguments.token, this.fileSaver.bind(this), this.progressFunc.bind(this), this.phaseFunc.bind(this),
             {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
@@ -101,98 +180,17 @@ class Application {
             //'EVZAOAW2e6U'
         ];
 
-        this.quipProcessor.startExport(foldersToExport).then(() => {
+        this.quipProcessor.startExport(foldersToExport).then((aaa) => {
             this.Logger.debug(this.quipProcessor.quipService.stats);
             if(this.cliArguments.zip) {
                 //save zip file
-                this.zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then(function(content) {
+                this.zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then((content) => {
                     fs.writeFile(path.join(this.desinationFolder, 'quip-export.zip'), content, () => {
                         console.log("Zip-file has been saved: ", path.join(this.desinationFolder, 'quip-export.zip'));
                     });
                 });
             }
         });
-    }
-}
-
-const App = new Application();
-
-/*
-callback-function for file saving
-*/
-function fileSaver(data, fileName, type, filePath) {
-    if(type === 'BLOB') {
-        if(App.cliArguments.zip) {
-            App.zip.folder(filePath).file(fileName, data.arrayBuffer());
-        } else {
-            utils.writeBlobFile(path.join(App.desinationFolder, "quip-export", filePath, fileName), data);
-        }
-    } else {
-        if(App.cliArguments.zip) {
-            App.zip.folder(filePath).file(fileName, data);
-        } else {
-            utils.writeTextFile(path.join(App.desinationFolder, "quip-export", filePath, fileName), data);
-        }
-    }
-}
-
-/*
-callback-function for progress indication
-*/
-function progressFunc(progress) {
-    App.updateProgess(progress);
-}
-
-/*
-callback-function for export life cycle phases
-available phases:
-   START - start of process
-   STOP -  end of process
-   ANALYSIS - folder/threads structure analysis
-   EXPORT - export
-*/
-function phaseFunc(phase, prevPhase) {
-    if(phase === 'START') {
-        process.stdout.write(colors.gray(`Quip API: ${App.quipProcessor.quipService.apiURL}`));
-        process.stdout.write('\n');
-    }
-
-    if (phase === 'ANALYSIS'){
-        process.stdout.write('\n');
-        process.stdout.write(colors.cyan('Analysing folders...'));
-        process.stdout.write('\n');
-
-        App.spinnerIndicator.setSpinnerDelay(80);
-        App.spinnerIndicator.setSpinnerString("|/-\\");
-
-        App.updateProgess = (progress) => {
-            App.spinnerIndicator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
-        };
-
-        App.spinnerIndicator.start();
-    }
-
-    if(prevPhase === 'ANALYSIS') {
-        App.spinnerIndicator.onTick(`    read ${App.quipProcessor.foldersTotal} folder(s) | ${App.quipProcessor.threadsTotal} thread(s)`);
-        App.spinnerIndicator.stop();
-        process.stdout.write('\n');
-    }
-
-    if(phase === 'EXPORT') {
-        process.stdout.write('\n');
-        process.stdout.write(colors.cyan('Exporting...'));
-        process.stdout.write('\n');
-
-
-        App.progressIndicator.start(App.quipProcessor.threadsTotal, 0);
-        App.updateProgess = (progress) => {
-            App.progressIndicator.update(progress.threadsProcessed);
-        };
-    }
-
-    if(prevPhase === 'EXPORT') {
-        App.progressIndicator.stop();
-        process.stdout.write('\n');
     }
 }
 

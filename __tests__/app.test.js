@@ -1,3 +1,6 @@
+const path =  require('path');
+const fs = require('fs');
+
 const {App} = require('../app');
 const {documentTemplate, documentCSS} = require('../app');
 
@@ -17,18 +20,43 @@ const PinoLogger =  require('../lib/common/PinoLogger');
 jest.mock('../lib/QuipService');
 const QuipService = require('../lib/QuipService');
 
+jest.mock('../lib/QuipProcessor');
+const QuipProcessor = require('../lib/QuipProcessor');
+
 jest.mock('jszip');
 const JSZip = require('jszip');
-const JSZipMock = {file: jest.fn(), generateAsync: jest.fn()};
+const JSZipMock = {
+    file: jest.fn(),
+    generateAsync: jest.fn(() =>  new Promise((resolve) => {resolve('CONTENT')}))
+};
 JSZip.mockImplementation(() => {
     return JSZipMock
 });
 
+let app;
+
 function initApp() {
+    app = new App();
     console.log = jest.fn();
-    CliArguments.mockReturnValue({destination: 'c:/temp'});
+    CliArguments.mockReturnValue({
+        destination: 'c:/temp',
+        token: 'TOKEN',
+        ['embedded-styles']: true,
+        ['embedded-images']: true
+    });
     QuipService.mockImplementation(() => {
-        return {checkUser: () => true, setLogger: () => {}}
+        return {
+            checkUser: () => true,
+            setLogger: () => {}
+        }
+    });
+
+    QuipProcessor.mockImplementation(() => {
+        return {
+            startExport: jest.fn(() =>  new Promise((resolve) => {resolve('RESOLVED')})),
+            setLogger: jest.fn(),
+            quipService: {stats: 'STATS'}
+        }
     });
 }
 
@@ -53,13 +81,13 @@ describe('main() tests', () => {
         CliArguments.mockImplementation(() => {
             throw 'Message';
         });
-        await App.main();
+        await app.main();
         expect(console.log).toHaveBeenCalledWith("Message");
         expect(console.log).not.toHaveBeenCalledWith(`Quip-Export v1.33`);
     });
 
     test('CliArguments not throws exception', async () => {
-        await App.main();
+        await app.main();
         expect(console.log).not.toHaveBeenCalledWith("Message");
         expect(console.log).toHaveBeenCalledWith(`Quip-Export v1.33`);
     });
@@ -70,9 +98,9 @@ describe('main() tests', () => {
         PinoLogger.mockImplementation(() => {
             return pinoLoggerObj;
         });
-        await App.main();
+        await app.main();
         expect(PinoLogger).toHaveBeenCalledWith(PinoLogger.LEVELS.DEBUG, 'c:/temp/export.log');
-        expect(App.Logger).toBe(pinoLoggerObj);
+        expect(app.Logger).toBe(pinoLoggerObj);
     });
 
     test('normal mode -> set up logger with info level', async () => {
@@ -80,15 +108,20 @@ describe('main() tests', () => {
         PinoLogger.mockImplementation(() => {
             return pinoLoggerObj;
         });
-        await App.main();
+        await app.main();
         expect(PinoLogger).toHaveBeenCalledWith(PinoLogger.LEVELS.INFO, 'c:/temp/export.log');
-        expect(App.Logger).toBe(pinoLoggerObj);
+        expect(app.Logger).toBe(pinoLoggerObj);
     });
 
     test('localOutdate = true', async () => {
         Utils.getVersionInfo.mockResolvedValue({localVersion: '1.33', localOutdate: true});
-        await App.main();
+        await app.main();
         expect(Utils.cliBox).toHaveBeenCalled();
+    });
+
+    test('init QuipService', async () => {
+        await app.main();
+        expect(QuipService).toHaveBeenCalledWith('TOKEN');
     });
 
     test('setLogger for QuipService', async () => {
@@ -96,12 +129,12 @@ describe('main() tests', () => {
         QuipService.mockImplementation(() => {
             return quipServiceMock
         });
-        await App.main();
-        expect(quipServiceMock.setLogger).toHaveBeenCalledWith(App.Logger);
+        await app.main();
+        expect(quipServiceMock.setLogger).toHaveBeenCalledWith(app.Logger);
     });
 
     test('User is available', async () => {
-        await App.main();
+        await app.main();
         expect(console.log).toHaveBeenCalledWith(`Destination folder: c:/temp`);
     });
 
@@ -109,14 +142,68 @@ describe('main() tests', () => {
         QuipService.mockImplementation(() => {
             return {checkUser: () => false, setLogger: () => {}}
         });
-        await App.main();
+        await app.main();
         expect(console.log).toHaveBeenCalledWith(colors.red('ERROR: Token is wrong or expired.'));
         expect(console.log).not.toHaveBeenCalledWith(`Destination folder: c:/temp`);
     });
 
     test('activate zip', async () => {
         CliArguments.mockReturnValue({destination: 'c:/temp', zip: true});
-        await App.main();
-        expect(App.zip).toBe(JSZipMock);
+        await app.main();
+        expect(app.zip).toBe(JSZipMock);
+    });
+
+    test('init QuipProcessor', async () => {
+        await app.main();
+        expect(QuipProcessor).toHaveBeenCalledWith('TOKEN', expect.anything(), expect.anything(), expect.anything(),
+            {
+                documentTemplate,
+                documentCSS: documentCSS,
+                embeddedImages: true
+            }
+        );
+        expect(app.quipProcessor.setLogger).toHaveBeenCalledWith(app.Logger);
+    });
+
+    test('add css to zip', async () => {
+        CliArguments.mockReturnValue({
+            destination: 'c:/temp',
+            token: 'TOKEN',
+            ['embedded-styles']: false,
+            ['embedded-images']: true,
+            zip: true
+        });
+        await app.main();
+        expect(app.zip.file).toHaveBeenCalledWith('document.css', documentCSS);
+    });
+
+    test('add css in file system', async () => {
+        CliArguments.mockReturnValue({
+            destination: 'c:/temp',
+            token: 'TOKEN',
+            ['embedded-styles']: false,
+            ['embedded-images']: true,
+            zip: false
+        });
+        Utils.writeTextFile = jest.fn();
+        await app.main();
+        expect(Utils.writeTextFile).toHaveBeenCalledWith(path.join('c:/temp', "quip-export", 'document.css'), documentCSS);
+    });
+
+    test('start export: zip', async () => {
+        CliArguments.mockReturnValue({
+            destination: 'c:/temp',
+            token: 'TOKEN',
+            ['embedded-styles']: true,
+            ['embedded-images']: true,
+            zip: true
+        });
+        fs.writeFile = jest.fn((path, content, cb) => cb());
+        await app.main();
+        expect(app.quipProcessor.startExport).toHaveBeenCalled();
+        expect(app.Logger.debug).toHaveBeenCalledWith('STATS');
+        expect(app.zip.generateAsync).toHaveBeenCalled();
+        expect(fs.writeFile).toHaveBeenCalled();
+        expect(console.log).toHaveBeenCalledWith("Zip-file has been saved: ", path.join(app.desinationFolder, 'quip-export.zip'));
     });
 });
