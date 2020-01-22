@@ -3,8 +3,12 @@
   "version": "1.6.0",
   "description": "Export all folders and documents from Quip",
   "main": "index.js",
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
-    "lint": "eslint \"**/*.js\""
+    "lint": "eslint \"**/*.js\"",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
