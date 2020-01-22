@@ -35,6 +35,11 @@ JSZip.mockImplementation(() => {
 
 let app;
 
+const pinoLoggerObj = {
+    error: jest.fn(),
+    debug: jest.fn()
+};
+
 function initApp() {
     app = new App();
     console.log = jest.fn();
@@ -57,6 +62,10 @@ function initApp() {
             setLogger: jest.fn(),
             quipService: {stats: 'STATS'}
         }
+    });
+
+    PinoLogger.mockImplementation(() => {
+        return pinoLoggerObj;
     });
 }
 
@@ -94,20 +103,12 @@ describe('main() tests', () => {
 
     test('debug mode -> set up logger with debug level', async () => {
         CliArguments.mockReturnValue({destination: 'c:/temp', debug: true});
-        const pinoLoggerObj = {error: ()=>{} };
-        PinoLogger.mockImplementation(() => {
-            return pinoLoggerObj;
-        });
         await app.main();
         expect(PinoLogger).toHaveBeenCalledWith(PinoLogger.LEVELS.DEBUG, 'c:/temp/export.log');
         expect(app.Logger).toBe(pinoLoggerObj);
     });
 
     test('normal mode -> set up logger with info level', async () => {
-        const pinoLoggerObj = {error: ()=>{} };
-        PinoLogger.mockImplementation(() => {
-            return pinoLoggerObj;
-        });
         await app.main();
         expect(PinoLogger).toHaveBeenCalledWith(PinoLogger.LEVELS.INFO, 'c:/temp/export.log');
         expect(app.Logger).toBe(pinoLoggerObj);
