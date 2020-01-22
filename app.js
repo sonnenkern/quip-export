@@ -32,7 +32,7 @@ class App {
             barIncompleteChar: '\u2591',
             hideCursor: false
         });
-        this.updateProgess = ()=>{};
+        this.phase;
     }
 
     /*
@@ -58,7 +58,12 @@ class App {
     callback-function for progress indication
     */
     progressFunc(progress) {
-        this.updateProgess(progress);
+        if(this.phase === 'ANALYSIS') {
+            this.spinnerIndicator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
+        }
+        else if(this.phase === 'EXPORT') {
+            this.progressIndicator.update(progress.threadsProcessed);
+        }
     }
 
     /*
@@ -70,6 +75,7 @@ class App {
         EXPORT - export
      */
     phaseFunc(phase, prevPhase) {
+        this.phase = phase;
         if(phase === 'START') {
             process.stdout.write(colors.gray(`Quip API: ${this.quipProcessor.quipService.apiURL}`));
             process.stdout.write('\n');
@@ -82,10 +88,6 @@ class App {
 
             this.spinnerIndicator.setSpinnerDelay(80);
             this.spinnerIndicator.setSpinnerString("|/-\\");
-
-            this.updateProgess = (progress) => {
-                this.spinnerIndicator.text = ` %s  read ${progress.readFolders} folder(s) | ${progress.readThreads} thread(s)`;
-            };
 
             this.spinnerIndicator.start();
         }
@@ -101,11 +103,7 @@ class App {
             process.stdout.write(colors.cyan('Exporting...'));
             process.stdout.write('\n');
 
-
             this.progressIndicator.start(this.quipProcessor.threadsTotal, 0);
-            this.updateProgess = (progress) => {
-                this.progressIndicator.update(progress.threadsProcessed);
-            };
         }
 
         if(prevPhase === 'EXPORT') {

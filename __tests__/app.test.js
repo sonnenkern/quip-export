@@ -10,6 +10,8 @@ const Utils = require('../lib/common/utils');
 Utils.getVersionInfo = jest.fn();
 Utils.cliBox = jest.fn();
 Utils.getVersionInfo.mockResolvedValue({localVersion: '1.33'});
+Utils.writeBlobFile = jest.fn();
+Utils.writeTextFile = jest.fn();
 
 jest.mock('../lib/cli/CliArguments');
 const CliArguments = require('../lib/cli/CliArguments');
@@ -27,7 +29,8 @@ jest.mock('jszip');
 const JSZip = require('jszip');
 const JSZipMock = {
     file: jest.fn(),
-    generateAsync: jest.fn(() =>  new Promise((resolve) => {resolve('CONTENT')}))
+    generateAsync: jest.fn(() =>  new Promise((resolve) => {resolve('CONTENT')})),
+    folder: jest.fn(() => JSZipMock),
 };
 JSZip.mockImplementation(() => {
     return JSZipMock
@@ -208,3 +211,148 @@ describe('main() tests', () => {
         expect(console.log).toHaveBeenCalledWith("Zip-file has been saved: ", path.join(app.desinationFolder, 'quip-export.zip'));
     });
 });
+
+describe('fileSaver() tests', () => {
+    const blob =  {
+        arrayBuffer () {
+            return [1,2,3,4];
+        }
+    };
+
+    const fileName = 'aaa.html';
+    const filePath = '/some/path';
+
+    beforeEach(() => {
+        app = new App();
+        app.zip = new JSZip();
+        app.cliArguments = {
+          zip: true
+        };
+        app.desinationFolder = "c:\temp";
+    });
+
+    test('BLOB zip', async () => {
+        app.cliArguments = {
+            zip: true
+        };
+        app.fileSaver(blob, fileName, 'BLOB', filePath);
+        expect(app.zip.folder).toHaveBeenCalledWith(filePath);
+        expect(app.zip.file).toHaveBeenCalledWith(fileName, [1,2,3,4]);
+    });
+
+    test('BLOB file', async () => {
+        app.cliArguments = {
+            zip: false
+        };
+        app.fileSaver(blob, fileName, 'BLOB', filePath);
+        expect(Utils.writeBlobFile).toHaveBeenCalledWith(path.join(app.desinationFolder, "quip-export", filePath, fileName), blob);
+    });
+
+    test('not a BLOB zip', async () => {
+        app.cliArguments = {
+            zip: true
+        };
+        app.fileSaver(blob, fileName, 'NOT-BLOB', filePath);
+        expect(app.zip.folder).toHaveBeenCalledWith(filePath);
+        expect(app.zip.file).toHaveBeenCalledWith(fileName, blob);
+    });
+
+    test('not a BLOB file', async () => {
+        app.cliArguments = {
+            zip: false
+        };
+        app.fileSaver(blob, fileName, 'NOT-BLOB', filePath);
+        expect(Utils.writeTextFile).toHaveBeenCalledWith(path.join(app.desinationFolder, "quip-export", filePath, fileName), blob);
+    });
+});
+
+describe('progressFunc() tests', () => {
+    beforeEach(() => {
+        app = new App();
+        app.spinnerIndicator = {
+            text: ''
+        };
+        app.progressIndicator = {
+            update: jest.fn()
+        };
+    });
+
+    test('progressFunc(), phase ANALYSIS', async () => {
+        app.phase = 'ANALYSIS';
+        app.progressFunc({
+            readFolders: 100,
+            readThreads: 200
+        });
+        expect(app.spinnerIndicator.text).toBe(` %s  read 100 folder(s) | 200 thread(s)`);
+    });
+
+    test('progressFunc(), phase EXPORT', async () => {
+        app.phase = 'EXPORT';
+        app.progressFunc({
+            threadsProcessed: 1000
+        });
+        expect(app.progressIndicator.update).toHaveBeenCalledWith(1000);
+    });
+});
+
+describe('phaseFunc() tests', () => {
+    const progress = {
+        readFolders: 10,
+        readThreads: 20,
+        threadsProcessed: 30
+    };
+
+    beforeEach(() => {
+        app = new App();
+        process.stdout.write = jest.fn();
+        app.spinnerIndicator = {
+            setSpinnerDelay: jest.fn(),
+            setSpinnerString: jest.fn(),
+            text: 'TEXT',
+            start: jest.fn(),
+            stop: jest.fn(),
+            onTick: jest.fn(),
+        };
+        app.progressIndicator = {
+            start: jest.fn(),
+            update: jest.fn(),
+            stop: jest.fn()
+        };
+        app.quipProcessor = {
+            foldersTotal: 100,
+            threadsTotal: 200,
+            quipService: {
+                apiURL: 'http://url.com'
+            }
+        };
+    });
+
+    test("phase === 'START'", async () => {
+        app.phaseFunc('START', '');
+        expect(process.stdout.write).toHaveBeenCalledWith(colors.gray(`Quip API: ${app.quipProcessor.quipService.apiURL}`));
+    });
+
+    test("phase === 'ANALYSIS'", async () => {
+        app.phaseFunc('ANALYSIS', '');
+        expect(process.stdout.write).toHaveBeenCalledWith(colors.cyan('Analysing folders...'));
+        expect(app.spinnerIndicator.start).toBeCalled();
+    });
+
+    test("prevPhase === 'ANALYSIS'", async () => {
+        app.phaseFunc('', 'ANALYSIS');
+        expect(app.spinnerIndicator.onTick).toHaveBeenCalledWith(`    read 100 folder(s) | 200 thread(s)`);
+        expect(app.spinnerIndicator.stop).toBeCalled();
+    });
+
+    test("phase === 'EXPORT'", async () => {
+        app.phaseFunc('EXPORT', '');
+        expect(process.stdout.write).toHaveBeenCalledWith(colors.cyan('Exporting...'));
+        expect(app.progressIndicator.start).toHaveBeenCalledWith(200, 0);
+    });
+
+    test("prevPhase === 'EXPORT'", async () => {
+        app.phaseFunc('', 'EXPORT');
+        expect(app.progressIndicator.stop).toHaveBeenCalled();
+    });
+});
+
