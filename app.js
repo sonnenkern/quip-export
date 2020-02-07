@@ -176,9 +176,10 @@ class App {
             //'FOLDER-1'
             //'FOLDER-2'
             //'EVZAOAW2e6U'
+            'CUTAOA2J8VL'
         ];
 
-        this.quipProcessor.startExport(foldersToExport).then((aaa) => {
+        this.quipProcessor.startExport(foldersToExport).then(() => {
             this.Logger.debug(this.quipProcessor.quipService.stats);
             if(this.cliArguments.zip) {
                 //save zip file
