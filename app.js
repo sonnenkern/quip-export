@@ -176,7 +176,7 @@ class App {
             //'FOLDER-1'
             //'FOLDER-2'
             //'EVZAOAW2e6U'
-            'CUTAOA2J8VL'
+            //'CUTAOA2J8VL'
         ];
 
         this.quipProcessor.startExport(foldersToExport).then(() => {
