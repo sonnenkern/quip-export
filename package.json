@@ -39,25 +39,25 @@
   },
   "homepage": "https://github.com/sonnenkern/quip-export#readme",
   "dependencies": {
-    "cli-progress": "^3.3.1",
+    "cli-progress": "^3.6.0",
     "cli-spinner": "^0.2.10",
     "colors": "^1.4.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.0.2",
-    "ejs": "^2.7.1",
+    "ejs": "^3.0.1",
     "jszip": "^3.2.2",
     "mime": "^2.4.4",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "node-fetch": "^2.6.0",
     "npmview": "0.0.4",
-    "pino": "~5.14.0",
+    "pino": "^5.16.0",
     "pino-pretty": "^3.5.0",
     "sanitize-filename": "^1.6.3",
-    "semver": "^6.3.0"
+    "semver": "^7.1.2"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
     "eslint-config-aenondynamics": "^0.2.0",
-    "jest": "^24.9.0"
+    "jest": "^25.1.0"
   }
 }
