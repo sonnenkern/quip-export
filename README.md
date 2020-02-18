@@ -70,6 +70,7 @@ npm install quip-export
   -z, --zip                  Zip export files
   --embedded-styles          Embedded in each document stylesheet
   --embedded-images          Embedded images
+  --resolve-references       Resolves references to other Quip documents and folders to a proper relative path
   --debug                    Extended logging
 ```
 

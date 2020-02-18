@@ -160,7 +160,8 @@ class App {
             {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
-                embeddedImages: this.cliArguments['embedded-images']
+                embeddedImages: this.cliArguments['embedded-images'],
+                resolveReferences: this.cliArguments['resolve-references']
             });
         this.quipProcessor.setLogger(this.Logger);
 

@@ -50,7 +50,8 @@ function initApp() {
         destination: 'c:/temp',
         token: 'TOKEN',
         ['embedded-styles']: true,
-        ['embedded-images']: true
+        ['embedded-images']: true,
+        ['resolve-references']: true
     });
     QuipService.mockImplementation(() => {
         return {
@@ -163,7 +164,8 @@ describe('main() tests', () => {
             {
                 documentTemplate,
                 documentCSS: documentCSS,
-                embeddedImages: true
+                embeddedImages: true,
+                resolveReferences: true
             }
         );
         expect(app.quipProcessor.setLogger).toHaveBeenCalledWith(app.Logger);
