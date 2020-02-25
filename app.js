@@ -14,9 +14,9 @@ const utils = require('./lib/common/utils');
 const CliArguments = require('./lib/cli/CliArguments');
 
 //EJS template for html documents
-const documentTemplate = utils.readTextFile(path.join(__dirname, '/lib/templates/document.ejs'));
+const documentTemplate = utils.readTextFile(path.join(__dirname, './lib/templates/document.ejs'));
 //CSS style for html documents
-const documentCSS = utils.readTextFile(path.join(__dirname, '/lib/templates/document.css'));
+const documentCSS = utils.readTextFile(path.join(__dirname, './lib/templates/document.css'));
 
 class App {
     constructor() {

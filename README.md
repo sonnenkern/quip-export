@@ -19,6 +19,13 @@ Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or Java
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example-anim.gif">
 </p>
 
+## Online web app and demo
+Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](http://www.quip-export.com)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
+</p>
+
 ## Install and usage
 As mentioned before, Quip-Export tool needs Node.js (version 10.16 or higher) environment.
 Node.js version check:
@@ -48,6 +55,12 @@ quip-export [options]
 Install:
 ```
 git clone https://github.com/sonnenkern/quip-export.git
+```
+
+Install project dependencies:
+```
+cd quip-export
+npm install
 ```
 
 Usage example from project folder:
@@ -89,13 +102,6 @@ Export in Zip-file with current folder as destination
 ```
 quip-export -t "JHHHK222333444LLL1=" -z
 ```
-
-## Online web app and demo
-Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](http://www.quip-export.com)
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
-</p>
 
 ## Logging
 The export errors are written to file export.log in the destination folder.
