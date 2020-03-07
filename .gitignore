@@ -11,3 +11,4 @@ package-lock.json
 # misc
 .DS_Store
 npm-debug.log
+http-client.private.env.json
