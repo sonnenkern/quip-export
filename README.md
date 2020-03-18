@@ -20,7 +20,7 @@ Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or Java
 </p>
 
 ## Online web app and demo
-Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](http://www.quip-export.com)
+Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](https://www.quip-export.com)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
