@@ -1,6 +1,6 @@
 {
   "name": "quip-export",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "Export all folders and documents from Quip",
   "main": "index.js",
   "jest": {
