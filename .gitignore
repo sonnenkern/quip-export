@@ -8,6 +8,9 @@ package-lock.json
 # production
 /build
 
+#jest
+/coverage
+
 # misc
 .DS_Store
 npm-debug.log

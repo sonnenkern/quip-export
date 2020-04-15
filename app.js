@@ -180,17 +180,17 @@ class App {
             //'CUTAOA2J8VL'
         ];
 
-        this.quipProcessor.startExport(foldersToExport).then(() => {
-            this.Logger.debug(this.quipProcessor.quipService.stats);
-            if(this.cliArguments.zip) {
-                //save zip file
-                this.zip.generateAsync({type:"nodebuffer", compression: "DEFLATE"}).then((content) => {
-                    fs.writeFile(path.join(this.desinationFolder, 'quip-export.zip'), content, () => {
-                        console.log("Zip-file has been saved: ", path.join(this.desinationFolder, 'quip-export.zip'));
-                    });
-                });
-            }
-        });
+        await this.quipProcessor.startExport(foldersToExport);
+
+        this.Logger.debug(this.quipProcessor.quipService.stats);
+
+        if(this.cliArguments.zip) {
+            //save zip file
+            const content = await this.zip.generateAsync({type: "nodebuffer", compression: "DEFLATE"});
+            await fs.writeFile(path.join(this.desinationFolder, 'quip-export.zip'), content, () => {
+                console.log("Zip-file has been saved: ", path.join(this.desinationFolder, 'quip-export.zip'));
+            });
+        }
     }
 }
 

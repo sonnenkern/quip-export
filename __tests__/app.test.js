@@ -210,6 +210,7 @@ describe('main() tests', () => {
         expect(app.Logger.debug).toHaveBeenCalledWith('STATS');
         expect(app.zip.generateAsync).toHaveBeenCalled();
         expect(fs.writeFile).toHaveBeenCalled();
+
         expect(console.log).toHaveBeenCalledWith("Zip-file has been saved: ", path.join(app.desinationFolder, 'quip-export.zip'));
     });
 });
