@@ -3,4 +3,7 @@ GET {{quip_api_url}}/users/current
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
-###
+### search threads
+GET https://platform.quip.com/1/threads/search?query=Programming
+Accept: application/json
+Authorization: Bearer {{auth_token}}
