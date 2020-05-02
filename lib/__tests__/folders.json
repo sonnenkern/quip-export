@@ -14,7 +14,7 @@
       "member_ids":[],
       "children":
         [
-          {"folder_id":"F1"},
+          {"folder_id":"F1", "restricted": true},
           {"folder_id":"F2"},
           {"folder_id":"F3"},
           {"folder_id":"F4"},
