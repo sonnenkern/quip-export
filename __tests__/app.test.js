@@ -299,12 +299,6 @@ describe('progressFunc() tests', () => {
 });
 
 describe('phaseFunc() tests', () => {
-    const progress = {
-        readFolders: 10,
-        readThreads: 20,
-        threadsProcessed: 30
-    };
-
     beforeEach(() => {
         app = new App();
         process.stdout.write = jest.fn();
