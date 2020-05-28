@@ -25,3 +25,8 @@ GET https://platform.quip.com/1/blob/{{thread_with_messages}}/Ak5BJnkWubPxpIm4dt
 GET https://platform.quip.com/1/users/{{user_id}}
 Accept: application/json
 Authorization: Bearer {{auth_token}}
+
+### get folders
+GET https://platform.quip.com/1/folders/?ids=bGGAOAKTL4Y
+Accept: application/json
+Authorization: Bearer {{auth_token}}
