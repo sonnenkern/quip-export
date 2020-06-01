@@ -83,7 +83,7 @@ npm install quip-export
   -z, --zip                  Zip export files
   --embedded-styles          Embedded in each document stylesheet
   --embedded-images          Embedded images
-  --messages                 Exports comments (messages) for the documents
+  --comments                 Includes comments (messages) for the documents
   --debug                    Extended logging
 ```
 
