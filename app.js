@@ -161,7 +161,7 @@ class App {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
                 embeddedImages: this.cliArguments['embedded-images'],
-                messages: this.cliArguments['messages']
+                comments: this.cliArguments['comments']
             });
         this.quipProcessor.setLogger(this.Logger);
 
