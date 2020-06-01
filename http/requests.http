@@ -20,6 +20,8 @@ Authorization: Bearer {{auth_token}}
 
 ### get blob from thread
 GET https://platform.quip.com/1/blob/{{thread_with_messages}}/Ak5BJnkWubPxpIm4dtlWmg
+Accept: application/json
+Authorization: Bearer {{auth_token}}
 
 ### get user
 GET https://platform.quip.com/1/users/{{user_id}}
