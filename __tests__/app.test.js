@@ -51,7 +51,7 @@ function initApp() {
         token: 'TOKEN',
         ['embedded-styles']: true,
         ['embedded-images']: true,
-        ['resolve-references']: true
+        ['messages']: true
     });
     QuipService.mockImplementation(() => {
         return {
@@ -165,7 +165,7 @@ describe('main() tests', () => {
                 documentTemplate,
                 documentCSS: documentCSS,
                 embeddedImages: true,
-                resolveReferences: true
+                messages: true
             }
         );
         expect(app.quipProcessor.setLogger).toHaveBeenCalledWith(app.Logger);
@@ -299,12 +299,6 @@ describe('progressFunc() tests', () => {
 });
 
 describe('phaseFunc() tests', () => {
-    const progress = {
-        readFolders: 10,
-        readThreads: 20,
-        threadsProcessed: 30
-    };
-
     beforeEach(() => {
         app = new App();
         process.stdout.write = jest.fn();

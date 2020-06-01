@@ -161,7 +161,7 @@ class App {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
                 embeddedImages: this.cliArguments['embedded-images'],
-                resolveReferences: this.cliArguments['resolve-references']
+                messages: this.cliArguments['messages']
             });
         this.quipProcessor.setLogger(this.Logger);
 
@@ -178,6 +178,7 @@ class App {
             //'FOLDER-2'
             //'EVZAOAW2e6U'
             //'UPWAOAAEpFn' //Test
+            //'bGGAOAKTL4Y' //Test/folder1
         ];
 
         await this.quipProcessor.startExport(foldersToExport);

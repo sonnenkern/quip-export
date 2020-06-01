@@ -1,0 +1,85 @@
+[
+  {
+    "test_description": "Person link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "created_usec": 1588922400693783,
+    "updated_usec": 1588922400706385,
+    "text": "Message with person-link https:\/\/quip.com\/VKJAEAUa2PB",
+    "mention_user_ids": [
+      "VKJAEAUa2PB"
+    ],
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Folder link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAleJRK",
+    "created_usec": 1588922338752846,
+    "updated_usec": 1588922338763732,
+    "text": "Message with folder-link https:\/\/quip.com\/UPWAOAAEpFn",
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Thread link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAxrKhb",
+    "created_usec": 1588922367022584,
+    "updated_usec": 1588922367036276,
+    "text": "Message with thread link https:\/\/quip.com\/bgCMALIfAuaI",
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "File links",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAa1qQG",
+    "created_usec": 1590430904798664,
+    "updated_usec": 1590430904812335,
+    "text": "444444",
+    "files": [
+      {
+        "name": "document1.html",
+        "hash": "1c2EXOl1sx04g5_hPNmt1A"
+      },
+      {
+        "name": "document1.pdf",
+        "hash": "sVhMwHaxsgiwmfMi4au1Zg"
+      }
+    ],
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Image link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAKZuzT",
+    "created_usec": 1588922447536790,
+    "updated_usec": 1588922447547165,
+    "text": "",
+    "files": [
+      {
+        "name": "2-19-WirGlaubenAnPlatooning-startseite_1000x1500.jpg",
+        "hash": "Ak5BJnkWubPxpIm4dtlWmg"
+      }
+    ],
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Message with annotation -> to be ignored",
+    "annotation": "WabADAipzzMXXX1111",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "created_usec": 1588922400693783,
+    "updated_usec": 1588922400706385,
+    "text": "Message with annotation https:\/\/quip.com\/VKJAEAUa2PB",
+    "mention_user_ids": [
+      "VKJAEAUa2PB"
+    ],
+    "author_name": "Heller Stern"
+  }
+]

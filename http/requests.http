@@ -7,3 +7,28 @@ Authorization: Bearer {{auth_token}}
 GET https://platform.quip.com/1/threads/search?query=Programming
 Accept: application/json
 Authorization: Bearer {{auth_token}}
+
+### get recent messages
+GET https://platform.quip.com/1/messages/{{thread_with_messages}}
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### get thread
+GET https://platform.quip.com/1/threads/{{thread_with_messages}}
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### get blob from thread
+GET https://platform.quip.com/1/blob/{{thread_with_messages}}/Ak5BJnkWubPxpIm4dtlWmg
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### get user
+GET https://platform.quip.com/1/users/{{user_id}}
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+### get folders
+GET https://platform.quip.com/1/folders/?ids=bGGAOAKTL4Y
+Accept: application/json
+Authorization: Bearer {{auth_token}}
