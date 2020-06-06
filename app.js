@@ -184,7 +184,7 @@ class App {
             //'EVZAOAW2e6U',
             //'UPWAOAAEpFn', //Test
             //'bGGAOAKTL4Y' //Test/folder1
-            'EJCAOAdY90Y', // Design patterns
+            //'EJCAOAdY90Y', // Design patterns
             //'NBaAOAhFXJJ' //React
         ];
 
