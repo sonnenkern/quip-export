@@ -51,7 +51,8 @@ function initApp() {
         token: 'TOKEN',
         ['embedded-styles']: true,
         ['embedded-images']: true,
-        ['messages']: true
+        ['comments']: true,
+        ['docx']: true
     });
     QuipService.mockImplementation(() => {
         return {
@@ -165,7 +166,8 @@ describe('main() tests', () => {
                 documentTemplate,
                 documentCSS: documentCSS,
                 embeddedImages: true,
-                messages: true
+                comments: true,
+                docx: true
             }
         );
         expect(app.quipProcessor.setLogger).toHaveBeenCalledWith(app.Logger);
