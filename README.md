@@ -90,7 +90,7 @@ npm install quip-export
   --embedded-images          Embedded images
   --docx                     Exports documents in MS-Office format (*.docx , *.xlsx)
   --comments                 Includes comments (messages) for the documents
-  --folders "string"         Comma separated folder's IDs
+  --folders "string"         Comma-separated folder's IDs to export
   --debug                    Extended logging
 ```
 
