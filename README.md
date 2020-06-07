@@ -5,14 +5,14 @@ Quip-Export uses official [Quip Automation API](https://quip.com/dev/automation/
 
 Features:
 
-* Export in HTML format with original Quip styling _(by default)_
+* Export in HTML format with original Quip styling
 * Export in MS Office format: .docx for documents, .xlsx for spresdsheets _(--docx)_ 
 * Embedded CSS for HTML-export _(--embedded-styles)_
 * Embedded images for HTML-export _(--embedded-images)_
 * Export of comments and conversations for HTML-export _(--comments)_
 * Export of specific folders only _(--folders)_ 
-* Export of referenced files in documents _(by default)_
-* Resolving of references between folders and documents to relative paths _(by default)_
+* Export of referenced files in documents
+* Resolving of references between folders and documents to relative paths
 
 Slides are not supported (due to poor quality of generated PDFs). Export in PDF are not supported (due to poor quality of generated PDFs).
 
