@@ -188,6 +188,10 @@ class App {
             //'NBaAOAhFXJJ' //React
         ];
 
+        if(this.cliArguments['folders']) {
+            foldersToExport = this.cliArguments['folders'];
+        }
+
         await this.quipProcessor.startExport(foldersToExport);
 
         this.Logger.debug(this.quipProcessor.quipService.stats);

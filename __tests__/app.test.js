@@ -215,6 +215,20 @@ describe('main() tests', () => {
 
         expect(console.log).toHaveBeenCalledWith("Zip-file has been saved: ", path.join(app.desinationFolder, 'quip-export.zip'));
     });
+
+    test('folders option', async () => {
+        const folders = ['111','222'];
+        CliArguments.mockReturnValue({
+            destination: 'c:/temp',
+            token: 'TOKEN',
+            ['embedded-styles']: false,
+            ['embedded-images']: false,
+            zip: false,
+            folders
+        });
+        await app.main();
+        expect(app.quipProcessor.startExport).toHaveBeenCalledWith(folders);
+    });
 });
 
 describe('fileSaver() tests', () => {
