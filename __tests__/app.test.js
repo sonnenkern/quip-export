@@ -51,7 +51,8 @@ function initApp() {
         token: 'TOKEN',
         ['embedded-styles']: true,
         ['embedded-images']: true,
-        ['messages']: true
+        ['comments']: true,
+        ['docx']: true
     });
     QuipService.mockImplementation(() => {
         return {
@@ -165,7 +166,8 @@ describe('main() tests', () => {
                 documentTemplate,
                 documentCSS: documentCSS,
                 embeddedImages: true,
-                messages: true
+                comments: true,
+                docx: true
             }
         );
         expect(app.quipProcessor.setLogger).toHaveBeenCalledWith(app.Logger);
@@ -212,6 +214,20 @@ describe('main() tests', () => {
         expect(fs.writeFile).toHaveBeenCalled();
 
         expect(console.log).toHaveBeenCalledWith("Zip-file has been saved: ", path.join(app.desinationFolder, 'quip-export.zip'));
+    });
+
+    test('folders option', async () => {
+        const folders = ['111','222'];
+        CliArguments.mockReturnValue({
+            destination: 'c:/temp',
+            token: 'TOKEN',
+            ['embedded-styles']: false,
+            ['embedded-images']: false,
+            zip: false,
+            folders
+        });
+        await app.main();
+        expect(app.quipProcessor.startExport).toHaveBeenCalledWith(folders);
     });
 });
 

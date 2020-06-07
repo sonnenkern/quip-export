@@ -2,9 +2,9 @@
 
 exports[`methods tests _getThreadMessagesHtml thread with messages 1`] = `
 "<div class='messagesBlock'>
-<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern: </span><br/><img class='message--image' src='RELATIVE_PATH'></img><br/>PROCESSED-IMAGE<br/></div>
-<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern: </span>444444<br/><a href=\\"RELATIVE_PATH\\">document1.html</a><br/>PROCESSED-FILE<br/><br/><a href=\\"RELATIVE_PATH\\">document1.pdf</a><br/>PROCESSED-FILE<br/></div>
-<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern: </span>Message with thread link  <a href=\\"RELATIVE_PATH\\">Document-1</a>PROCESSED-THREAD</div>
-<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern: </span>Message with folder-link  <a href=\\"RELATIVE_PATH\\">Test</a>PROCESSED-FOLDER</div>
-<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern: </span>Message with person-link  <span class=\\"message--user\\">@Alex</span></div></div>"
+<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern, 8 May 2020, 09:18<br/></span>Message with folder-link  <a href=\\"RELATIVE_PATH\\">Test</a>PROCESSED-FOLDER</div>
+<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern, 8 May 2020, 09:19<br/></span>Message with thread link  <a href=\\"RELATIVE_PATH\\">Document-1</a>PROCESSED-THREAD</div>
+<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern, 8 May 2020, 09:20<br/></span>Message with person-link  <span class=\\"message--user\\">@Alex</span></div>
+<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern, 8 May 2020, 09:20<br/></span><br/><img class='message--image' src='RELATIVE_PATH'></img><br/>PROCESSED-IMAGE<br/></div>
+<div class=\\"message\\"><span class=\\"message--user\\">Heller Stern, 25 May 2020, 20:21<br/></span>444444<br/><a href=\\"RELATIVE_PATH\\">document1.html</a><br/>PROCESSED-FILE<br/><br/><a href=\\"RELATIVE_PATH\\">document1.pdf</a><br/>PROCESSED-FILE<br/></div></div>"
 `;
