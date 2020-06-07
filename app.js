@@ -127,7 +127,6 @@ class App {
         //current folder as destination, if not set
         this.desinationFolder = (this.cliArguments.destination || process.cwd());
 
-
         if(this.cliArguments.debug) {
             this.Logger = new PinoLogger(PinoLogger.LEVELS.DEBUG, `${this.desinationFolder}/export.log`);
         } else {
@@ -138,6 +137,10 @@ class App {
 
         if(versionInfo.localOutdate) {
             utils.cliBox(`!!!! A new version of Quip-Export (v${versionInfo.remoteVersion}) is available.`);
+        }
+
+        if(this.cliArguments['comments'] && this.cliArguments['docx']) {
+            console.log('Docx export: comments option will be ignored.');
         }
 
         //Token verification
@@ -161,11 +164,13 @@ class App {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
                 embeddedImages: this.cliArguments['embedded-images'],
-                messages: this.cliArguments['messages']
+                comments: this.cliArguments['comments'],
+                docx: this.cliArguments['docx']
             });
+
         this.quipProcessor.setLogger(this.Logger);
 
-        if(!this.cliArguments['embedded-styles']) {
+        if(!this.cliArguments['embedded-styles'] && !this.cliArguments['docx']) {
             if(this.cliArguments.zip) {
                 this.zip.file('document.css', documentCSS);
             } else {
@@ -176,9 +181,11 @@ class App {
         let foldersToExport = [
             //'FOLDER-1'
             //'FOLDER-2'
-            //'EVZAOAW2e6U'
-            //'UPWAOAAEpFn' //Test
+            //'EVZAOAW2e6U',
+            //'UPWAOAAEpFn', //Test
             //'bGGAOAKTL4Y' //Test/folder1
+            //'EJCAOAdY90Y', // Design patterns
+            //'NBaAOAhFXJJ' //React
         ];
 
         await this.quipProcessor.startExport(foldersToExport);

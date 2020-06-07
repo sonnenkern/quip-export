@@ -1,26 +1,31 @@
 # Quip-Export
 Comprehensive full automated export (backup) tool for [Quip](https://quip.com/).
 
-Quip-Export uses official [Quip Automation API](https://quip.com/dev/automation/documentation) and exports all folders and referenced files from an Quip-Account. 
-The documents are exported as HTML files with original Quip styling.
-All referenced files and images in Quip document are saved in 'blobs' folder. 
-Quip-Export allows optionally to export in a zip-file.
+Quip-Export uses official [Quip Automation API](https://quip.com/dev/automation/documentation) and exports all documents and folders from an Quip-Account. 
 
-Slides are not supported (due to poor quality of generated PDFs).
+Features:
 
-Sometimes the export process goes not smooth and fast enough due to Quip API rate limits (HTTP 503: Over Rate Limit).
+* Export in HTML format with original Quip styling _(by default)_
+* Export in MS Office format: .docx for documents, .xlsx for spresdsheets _(--docx)_ 
+* Embedded CSS for HTML-export _(--embedded-styles)_
+* Embedded images for HTML-export _(--embedded-images)_
+* Export of comments and conversations for HTML-export _(--comments)_
+* Export of specific folders only _(--folders)_ 
+* Export of referenced files in documents _(by default)_
+* Resolving of references between folders and documents to relative paths _(by default)_
 
-Despite Quip-Export is designed as a standalone tool for Node.js environment, it could be also used as Quip export library for any kind of JavaScript applications. 
-In that case, the Quip-Export project is a good usage example.
+Slides are not supported (due to poor quality of generated PDFs). Export in PDF are not supported (due to poor quality of generated PDFs).
+
+Despite Quip-Export is designed as a standalone tool for Node.js environment, it could be also used as Quip export library for any kind of JavaScript applications. In that case, the Quip-Export project is a good usage example.
  
-Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or JavaScript (browser) environment.  
+Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or in pure browser environment.  
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example-anim.gif">
 </p>
 
 ## Online web app and demo
-Full featured web app using Quip-Export package with demo mode is available on [www.quip-export.com](https://www.quip-export.com)
+Full featured web app using Quip-Export npm package with demo mode is available on [www.quip-export.com](https://www.quip-export.com)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/demo.gif">
@@ -78,16 +83,22 @@ npm install quip-export
 ```
   -h, --help                 Usage guide.
   -v, --version              Print version info
-  -t, --token string         Quip Access Token.
-  -d, --destination string   Destination folder for export files
+  -t, --token "string"       Quip Access Token.
+  -d, --destination "string" Destination folder for export files
   -z, --zip                  Zip export files
   --embedded-styles          Embedded in each document stylesheet
   --embedded-images          Embedded images
-  --messages                 Exports comments (messages) for the documents
+  --docx                     Exports documents in MS-Office format (*.docx , *.xlsx)
+  --comments                 Includes comments (messages) for the documents
+  --folders "string"         Comma separated folder's IDs
   --debug                    Extended logging
 ```
 
 To generate a personal access token, visit the page: [https://quip.com/dev/token](https://quip.com/dev/token)
+
+Be aware, the options --comments, --embedded-images, --embedded-styles don't work together with export in MS-Office format (--docx) and will be ignored.
+
+The easiest way to get to know ID of Quip fodler is just to open the folder in Quip web application in browser and look at adress line. For example the adress "https://quip.com/bGG333444111" points to the folder with ID "bGG333444111".
 
 ## Usage examples
 Export to folder c:\temp
