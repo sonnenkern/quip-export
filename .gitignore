@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-.idea/
 package-lock.json
 
 # production
@@ -13,5 +12,7 @@ package-lock.json
 
 # misc
 .DS_Store
+.idea/
+*.iml
 npm-debug.log
 http-client.private.env.json
