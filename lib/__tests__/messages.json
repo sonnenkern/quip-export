@@ -48,6 +48,13 @@
       {
         "name": "document1.pdf",
         "hash": "sVhMwHaxsgiwmfMi4au1Zg"
+      },
+      {
+        "name": "document_unknown_type",
+        "hash": "1c2EXOl1sx04g5_hPNmt1A222"
+      },
+      {
+        "hash": "sVhMwHaxsgiwmfMi4au1Zg111"
       }
     ],
     "author_name": "Heller Stern"
