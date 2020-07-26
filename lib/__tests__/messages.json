@@ -33,6 +33,16 @@
     "author_name": "Heller Stern"
   },
   {
+    "test_description": "Unknown thread link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAxrKhb",
+    "created_usec": 1588922367022584,
+    "updated_usec": 1588922367036276,
+    "text": "Message with thread link https:\/\/quip.com\/XXXXXXXXXX",
+    "author_name": "Heller Stern"
+  },
+  {
     "test_description": "File links",
     "author_id": "VOQAEArheMG",
     "visible": true,
