@@ -4,6 +4,7 @@ const colors = require('colors');
 const cliProgress = require('cli-progress');
 const JSZip = require('jszip');
 const fs = require('fs');
+const moment = require('moment');
 
 //PinoLogger implements LoggerAdapter-Interface
 //It is possible to use another logger instead of PinoLogger
@@ -114,6 +115,7 @@ class App {
 
     //main entry point
     async main() {
+        console.log();
         const versionInfo = await utils.getVersionInfo();
 
         //cli arguments parsing and validation
@@ -192,9 +194,16 @@ class App {
             foldersToExport = this.cliArguments['folders'];
         }
 
+        const startTime = new Date().getTime();
+
         await this.quipProcessor.startExport(foldersToExport);
 
+        const durationStr = moment.utc(new Date().getTime() - startTime).format("HH:mm:ss");
+
         this.Logger.debug(this.quipProcessor.quipService.stats);
+        this.Logger.debug(`Export duration: ${durationStr}`);
+
+        console.log(`Export duration: ${durationStr}`);
 
         if(this.cliArguments.zip) {
             //save zip file
