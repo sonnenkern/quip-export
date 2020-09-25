@@ -54,7 +54,8 @@
     "pino": "^5.16.0",
     "pino-pretty": "^3.5.0",
     "sanitize-filename": "^1.6.3",
-    "semver": "^7.1.2"
+    "semver": "^7.1.2",
+    "to-markdown": "^3.0.4"
   },
   "devDependencies": {
     "eslint": "^6.5.1",

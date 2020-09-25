@@ -18,6 +18,8 @@ const CliArguments = require('./lib/cli/CliArguments');
 const documentTemplate = utils.readTextFile(path.join(__dirname, './lib/templates/document.ejs'));
 //CSS style for html documents
 const documentCSS = utils.readTextFile(path.join(__dirname, './lib/templates/document.css'));
+//JS to load into html documents
+const documentScript = utils.readTextFile(path.join(__dirname, './lib/templates/document.js'));
 
 class App {
     constructor() {
@@ -175,8 +177,10 @@ class App {
         if(!this.cliArguments['embedded-styles'] && !this.cliArguments['docx']) {
             if(this.cliArguments.zip) {
                 this.zip.file('document.css', documentCSS);
+                this.zip.file('document.js', documentScript);
             } else {
                 utils.writeTextFile(path.join(this.desinationFolder, "quip-export", 'document.css'), documentCSS);
+                utils.writeTextFile(path.join(this.desinationFolder, "quip-export", 'document.js'), documentScript);
             }
         }
 
@@ -215,4 +219,4 @@ class App {
     }
 }
 
-module.exports = {App, documentTemplate, documentCSS};
+module.exports = {App, documentTemplate, documentCSS, documentScript};
