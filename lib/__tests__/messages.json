@@ -13,6 +13,19 @@
     "author_name": "Heller Stern"
   },
   {
+    "test_description": "Unknown person link",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "created_usec": 1588922400693783,
+    "updated_usec": 1588922400706385,
+    "text": "Message with unknown person-link https:\/\/quip.com\/unknownUser",
+    "mention_user_ids": [
+      "unknownUser"
+    ],
+    "author_name": "Heller Stern"
+  },
+  {
     "test_description": "Folder link",
     "author_id": "VOQAEArheMG",
     "visible": true,
@@ -97,6 +110,41 @@
     "mention_user_ids": [
       "VKJAEAUa2PB"
     ],
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Message without text",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "created_usec": 1588922400693783,
+    "updated_usec": 1588922400706385,
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Message without create date",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "text": "Message without create date",
+    "updated_usec": 1588922400706385,
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Message without updated date",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "text": "Message without updated date",
+    "created_usec": 1588922400693783,
+    "author_name": "Heller Stern"
+  },
+  {
+    "test_description": "Message without updated and create date",
+    "author_id": "VOQAEArheMG",
+    "visible": true,
+    "id": "WabADAipzzM",
+    "text": "Message without updated and create date",
     "author_name": "Heller Stern"
   }
 ]
