@@ -168,6 +168,7 @@ class App {
                 embeddedImages: this.cliArguments['embedded-images'],
                 comments: this.cliArguments['comments'],
                 docx: this.cliArguments['docx']
+                excludePattern: this.cliArguments['exclude-regex']
             });
 
         this.quipProcessor.setLogger(this.Logger);
