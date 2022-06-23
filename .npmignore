@@ -1,0 +1,5 @@
+__tests__
+.*
+/http
+/public
+/quip-export-*.tgz
