@@ -1,6 +1,6 @@
 {
   "name": "quip-export",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Export all folders and documents from Quip",
   "main": "index.js",
   "jest": {
@@ -50,7 +50,7 @@
     "mkdirp": "^1.0.3",
     "moment": "^2.26.0",
     "node-fetch": "^2.6.0",
-    "npmview": "0.0.4",
+    "npm-latest": "^2.0.0",
     "pino": "^5.16.0",
     "pino-pretty": "^3.5.0",
     "sanitize-filename": "^1.6.3",
