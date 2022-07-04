@@ -1,24 +1,24 @@
 # Quip-Export
 Comprehensive full automated export (backup) tool for [Quip](https://quip.com/).
 
-Quip-Export uses official [Quip Automation API](https://quip.com/dev/automation/documentation) and exports all documents and folders from an Quip-Account. 
+Quip-Export uses official [Quip Automation API](https://quip.com/dev/automation/documentation) and exports all documents and folders from an Quip-Account.
 
 Features:
 
 * Export in HTML format with original Quip styling
-* Export in MS Office format: .docx for documents, .xlsx for spresdsheets _(--docx)_ 
+* Export in MS Office format: .docx for documents, .xlsx for spresdsheets _(--docx)_
 * Embedded CSS for HTML-export _(--embedded-styles)_
 * Embedded images for HTML-export _(--embedded-images)_
 * Export of comments and conversations for HTML-export _(--comments)_
-* Export of specific folders only _(--folders)_ 
+* Export of specific folders only _(--folders)_
 * Export of referenced files in documents
 * Resolving of references between folders and documents to relative paths
 
 Slides are not supported (due to poor quality of generated PDFs). Export in PDF are not supported (due to poor quality of generated PDFs).
 
 Despite Quip-Export is designed as a standalone tool for Node.js environment, it could be also used as Quip export library for any kind of JavaScript applications. In that case, the Quip-Export project is a good usage example.
- 
-Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or in pure browser environment.  
+
+Quip-Export perfectly works on Windows, Mac OS and Linux/Unix in Node.js or in pure browser environment.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sonnenkern/quip-export/master/public/example-anim.gif">
@@ -92,6 +92,8 @@ npm install quip-export
   --comments                 Includes comments (messages) for the documents
   --folders "string"         Comma-separated folder's IDs to export
   --debug                    Extended logging
+  --exclude-regex            If passed, exclude documents matching this regex
+  --only-index               Do not export documents, just create a CSV document (index.csv) at destination
 ```
 
 To generate a personal access token, visit the page: [https://quip.com/dev/token](https://quip.com/dev/token)
