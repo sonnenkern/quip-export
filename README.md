@@ -126,8 +126,8 @@ In this case or other questions, please feel free to contact [info@quip-export.c
 ## 使用步骤
 
 1.下载上面的「Quip 文件导出脚本」
-2.网站（Quip）登录 Quip
-3.网站（Quip token）生成 Quip token
+2.网站（Quip）登录 Quip,;
+3.网站（Quip token）生成 Quip token: 访问 <https://quip.com/dev/token> 获取token;
 4.运行如下命令 ，命令里的 {} 表示使用者需填写的内容:
 
   ```bash
