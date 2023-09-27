@@ -37,6 +37,25 @@ class App {
     }
 
     /*
+    callback-function for file exists
+    */
+    fileExists( fileName, type, filePath) {
+        if(type === 'BLOB') {
+            if(this.cliArguments.zip) {
+                return false;
+            } else {
+                return utils.fileExists(path.join(this.desinationFolder, "quip-export", filePath, fileName));
+            }
+        } else {
+            if(this.cliArguments.zip) {
+                return false;
+            } else {
+                return utils.fileExists(path.join(this.desinationFolder, "quip-export", filePath, fileName));
+            }
+        }
+    }
+
+    /*
     callback-function for file saving
     */
     fileSaver(data, fileName, type, filePath) {
@@ -161,7 +180,10 @@ class App {
             this.zip = new JSZip();
         }
 
-        this.quipProcessor = new QuipProcessor(this.cliArguments.token, this.fileSaver.bind(this), this.progressFunc.bind(this), this.phaseFunc.bind(this),
+
+
+        this.quipProcessor = new QuipProcessor(this.cliArguments.token, this.fileSaver.bind(this), 
+            this.progressFunc.bind(this), this.phaseFunc.bind(this), this.fileExists.bind(this),
             {
                 documentTemplate,
                 documentCSS: this.cliArguments['embedded-styles']? documentCSS : '',
