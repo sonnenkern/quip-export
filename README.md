@@ -1,3 +1,12 @@
+> [!IMPORTANT]
+> Work on a new version of the tool is currently underway.
+> 
+> The existing version has not been updated for quite some time and no longer provides the level of speed and reliability expected today. The upcoming release is being redesigned with a strong focus on performance, stability, and maintainability.
+> 
+> The new version will be CLI-only and will no longer include the web interface.
+> 
+> More updates and a first release will follow soon.
+
 # Quip-Export
 Comprehensive full automated export (backup) tool for [Quip](https://quip.com/).
 
