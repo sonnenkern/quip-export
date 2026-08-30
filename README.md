@@ -1,11 +1,7 @@
 > [!IMPORTANT]
-> Work on a new version of the tool is currently underway.
+> Due to the [Quip retirement](https://help.salesforce.com/s/articleView?id=005299603&type=1), this project is discontinued and will no longer be developed or updated.
 > 
-> The existing version has not been updated for quite some time and no longer provides the level of speed and reliability expected today. The upcoming release is being redesigned with a strong focus on performance, stability, and maintainability.
-> 
-> The new version will be CLI-only and will no longer include the web interface.
-> 
-> More updates and a first release will follow soon.
+> We recommend switching to [Obsidian](https://obsidian.md) as a more reliable and modern knowledge management system.
 
 # Quip-Export
 Comprehensive full automated export (backup) tool for [Quip](https://quip.com/).
